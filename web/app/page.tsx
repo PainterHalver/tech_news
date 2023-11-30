@@ -1,13 +1,22 @@
+"use client";
+
 import { Metadata } from "next";
 import Image from "next/image";
 
-export const metadata: Metadata = {
-  title: "Test title",
-  description: "This is a test description",
-};
+import axios from "@/lib/axios";
+import { useAuthStore } from "@/lib/zustand/AuthStore";
 
-export default async function Home() {
-  const data = await fetch("https://jsonplaceholder.typicode.com/posts");
+// export const metadata: Metadata = {
+//   title: "Test title",
+//   description: "This is a test description",
+// };
 
-  return <main className="flex min-h-screen flex-col items-center justify-between p-24">Hallo</main>;
+export default function Home() {
+  const authenticated = useAuthStore((state) => state.authenticated);
+
+  return (
+    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+      {authenticated ? "YAY" : "NAY"}
+    </main>
+  );
 }
