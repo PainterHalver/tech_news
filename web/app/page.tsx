@@ -6,11 +6,6 @@ import Image from "next/image";
 import axios from "@/lib/axios";
 import { useAuthStore } from "@/lib/zustand/AuthStore";
 
-// export const metadata: Metadata = {
-//   title: "Test title",
-//   description: "This is a test description",
-// };
-
 export default function Home() {
   const authenticated = useAuthStore((state) => state.authenticated);
 
