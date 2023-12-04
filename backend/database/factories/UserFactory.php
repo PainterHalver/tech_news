@@ -24,7 +24,7 @@ class UserFactory extends Factory
                 : 'user'.$count++,
             'full_name' => $this->faker->name(),
             'avatar' => $this->faker->unique()->imageUrl(),
-            'password' => md5('111111'),
+            'password' => md5('1111'),
             'remember_token' => Str::random(10),
         ];
     }
