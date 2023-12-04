@@ -22,6 +22,6 @@ const config: Config = {
       "text-secondary": "var(--text-secondary)",
     },
   },
-  plugins: [],
+  plugins: [require("daisyui")],
 };
 export default config;
