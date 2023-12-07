@@ -18,7 +18,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <NavBar />
         <div className="flex flex-1">
           <SideBar />
-          <div className="pl-60">{children}</div>
+          <div className="pl-60 bg-bg-primary flex-1">{children}</div>
         </div>
       </body>
     </html>

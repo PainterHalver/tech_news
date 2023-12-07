@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('publisher_id')->constrained('publishers');
-            $table->string('hash')->unique()->comment('random hash to use instead of id');
+//            $table->string('hash')->unique()->comment('random hash to use instead of id');
             $table->string('title');
             $table->string('description')->nullable();
             $table->string('image')->nullable();
@@ -23,7 +23,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->index(['publisher_id']);
-            $table->index(['hash']);
+//            $table->index(['hash']);
             $table->index(['published_at']);
         });
     }
