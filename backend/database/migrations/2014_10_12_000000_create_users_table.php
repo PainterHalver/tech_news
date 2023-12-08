@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('full_name');
             $table->string('password')->comment('md5');
             $table->string('avatar')->nullable();
+            $table->enum('role', ['admin', 'user'])->default('user');
             $table->rememberToken();
             $table->timestamps();
 
