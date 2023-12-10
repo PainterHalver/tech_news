@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function NavBar() {
   return (
-    <div className="w-full flex bg-bg-primary border-b border-border sticky top-0 py-0.5">
+    <div className="w-full flex bg-bg-primary border-b border-border sticky top-0 py-1 items-center">
       <div className="flex-1">
         <Link href="/" className="btn bg-bg-primary hover:bg-bg-primary border-none">
           <p className="text-lg">Tech News</p>
@@ -15,7 +15,7 @@ export default function NavBar() {
               <img alt="Profile Picture" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
             </div>
           </div>
-          <ul tabIndex={0} className="mt-4 z-[1] p-2 shadow menu menu-md dropdown-content bg-base-100 rounded-box w-56">
+          <ul tabIndex={0} className="mt-4 z-[1] p-1 shadow menu menu-md dropdown-content bg-base-100 rounded-box w-60">
             <li>
               <a className="text-base">Profile</a>
             </li>

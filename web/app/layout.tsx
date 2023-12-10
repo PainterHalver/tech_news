@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { Roboto } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import NavBar from "@/components/NavBar";
 import SideBar from "@/components/SideBar";
 
-const roboto = Roboto({ subsets: ["latin"], weight: "400" });
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Tech News",
@@ -14,11 +14,11 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${roboto.className} flex flex-col min-h-screen`}>
+      <body className={`${inter.className} flex flex-col min-h-screen min-w-fit`}>
         <NavBar />
         <div className="flex flex-1">
           <SideBar />
-          <div className="pl-60 bg-bg-primary flex-1">{children}</div>
+          <div className="lg:pl-60 bg-bg-primary flex-1">{children}</div>
         </div>
       </body>
     </html>
