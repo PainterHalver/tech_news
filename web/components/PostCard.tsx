@@ -40,18 +40,18 @@ export const PostCard = ({ post }: { post: Post }) => {
       <h2 className="px-3 text-lg font-bold text-[#fff]">{trimString(post.title, 90)}</h2>
       <div className="px-3 mt-auto border-t border-border flex justify-between py-2">
         <div className="flex gap-1 items-center">
-          <div className="btn btn-ghost btn-circle btn-sm">
+          <div className="btn btn-ghost btn-square btn-sm">
             <BiUpvote className="text-2xl" />
           </div>
           <p className="text-base font-bold">{post.votes_count}</p>
         </div>
         <div className="flex gap-1 items-center">
-          <div className="btn btn-ghost btn-circle btn-sm">
+          <div className="btn btn-ghost btn-square btn-sm">
             <BiCommentDetail className="text-[1.3rem]" />
           </div>
           <p className="text-base font-bold">{post.comments_count}</p>
         </div>
-        <div className="btn btn-ghost btn-circle btn-sm">
+        <div className="btn btn-ghost btn-square btn-sm">
           <BiShareAlt className="text-2xl" />
         </div>
       </div>

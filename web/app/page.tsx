@@ -16,7 +16,7 @@ export default async function Home() {
       <h1 className="text-xl font-bold">Newly Updated</h1>
       <div className="flex flex-wrap justify-center flex-1 gap-8 mt-8">
         {posts.map((post) => (
-          <PostCard post={post} />
+          <PostCard post={post} key={post.id} />
         ))}
       </div>
       <PostModal />

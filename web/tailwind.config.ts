@@ -20,6 +20,7 @@ const config: Config = {
       "border-hover": "var(--border-hover)",
       "text-primary": "var(--text-primary)",
       "text-secondary": "var(--text-secondary)",
+      backdrop: "var(--backdrop)",
     },
   },
   plugins: [require("daisyui")],

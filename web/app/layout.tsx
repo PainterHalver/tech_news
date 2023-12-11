@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import NavBar from "@/components/NavBar";
 import SideBar from "@/components/SideBar";
+import { LoginModal } from "@/components/LoginModal";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,6 +21,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <SideBar />
           <div className="lg:pl-60 bg-bg-primary flex-1">{children}</div>
         </div>
+        <LoginModal />
       </body>
     </html>
   );

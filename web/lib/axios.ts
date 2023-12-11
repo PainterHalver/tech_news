@@ -1,14 +1,13 @@
 import axios from "axios";
 
-const baseURL = process.env.NEXT_PUBLIC_API_URL,
-  isServer = typeof window === "undefined";
+const baseURL = process.env.NEXT_PUBLIC_API_URL;
+const isServer = typeof window === "undefined";
 
 const api = axios.create({
   baseURL,
   headers: {
     "Content-Type": "application/json",
   },
-  withCredentials: true,
 });
 
 api.interceptors.request.use(async (config) => {
@@ -20,7 +19,8 @@ api.interceptors.request.use(async (config) => {
       config.headers["Authorization"] = `Bearer ${token}`;
     }
   } else {
-    const token = document.cookie.replace(/(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/, "$1");
+    // const token = document.cookie.replace(/(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/, "$1");
+    const token = localStorage.getItem("token");
 
     if (token) {
       config.headers["Authorization"] = `Bearer ${token}`;

@@ -9,6 +9,7 @@
   --border-hover: #545b6a;
   --text-primary: #ffffff;
   --text-secondary: #a8b3cf;
+  --backdrop: #00000066;
 }
 
 .no-scrollbar::-webkit-scrollbar {
