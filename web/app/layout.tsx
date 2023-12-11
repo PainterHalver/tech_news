@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} flex flex-col min-h-screen min-w-fit`}>
+      <body className={`${inter.className} flex flex-col min-h-screen min-w-fit no-scrollbar`}>
         <NavBar />
         <div className="flex flex-1">
           <SideBar />
