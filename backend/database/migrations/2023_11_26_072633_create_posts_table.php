@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('publisher_id')->constrained('publishers');
 //            $table->string('hash')->unique()->comment('random hash to use instead of id');
-            $table->string('title');
-            $table->string('description')->nullable();
+            $table->text('title');
+            $table->text('description')->nullable();
             $table->string('image')->nullable();
             $table->string('link')->nullable();
             $table->dateTime('published_at')->nullable();
