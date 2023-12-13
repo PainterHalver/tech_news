@@ -4,9 +4,31 @@ import { Post } from "@/lib/types";
 import { trimString } from "@/lib/utils";
 import moment from "moment";
 import Image from "next/image";
+import { useEffect, useRef } from "react";
 import { BiCommentDetail, BiShareAlt, BiUpvote } from "react-icons/bi";
 
-export const PostCard = ({ post }: { post: Post }) => {
+type Props = {
+  post: Post;
+  isLast: boolean;
+  addPage: () => void;
+};
+
+export const PostCard = ({ post, isLast, addPage }: Props) => {
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!cardRef.current) return;
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (isLast && entry.isIntersecting) {
+        addPage();
+        observer.unobserve(entry.target);
+      }
+    });
+
+    observer.observe(cardRef.current);
+  }, [isLast]);
+
   return (
     <div
       className="flex flex-col w-[20rem] h-[25rem] text-xs bg-bg-secondary hover:border-border-hover border border-border rounded-2xl overflow-hidden hover:cursor-pointer"
@@ -14,6 +36,7 @@ export const PostCard = ({ post }: { post: Post }) => {
         const modal = document.getElementById("post_modal");
         (modal as any).showModal();
       }}
+      ref={cardRef}
     >
       <div className="w-full h-fit">
         <Image
