@@ -24,7 +24,7 @@ export default function Home() {
     try {
       setFetching(true);
       const res = await axios.get(`/api/posts?per_page=${PER_PAGE}&page=${page}`);
-      const posts = res.data.posts as Paginated<Post>;
+      const posts = res.data as Paginated<Post>;
       setPosts((prev) => [...prev, ...posts.data]);
     } catch (error) {
       console.log(error);
@@ -38,7 +38,7 @@ export default function Home() {
   }, [page]);
 
   return (
-    <main className="flex flex-col py-5 px-16 min-h-full">
+    <main className="flex flex-col py-5 lg:px-16 px-8 min-h-full">
       <h1 className="text-xl font-bold">Newly Updated</h1>
       <div className="flex flex-wrap justify-center flex-1 gap-8 mt-8">
         {posts.map((post, index) => (

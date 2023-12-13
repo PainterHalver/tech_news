@@ -19,6 +19,14 @@ class PostsController extends Controller
             ->withCount(['votes as votes_count', 'comments as comments_count'])
             ->paginate($perPage);
 
-        return response()->json(['posts' => $posts], 200);
+        return response()->json($posts, 200);
+    }
+
+    public function show(Post $post): JsonResponse
+    {
+        $post->load('publisher');
+        $post->loadCount(['votes as votes_count', 'comments as comments_count']);
+
+        return response()->json($post, 200);
     }
 }

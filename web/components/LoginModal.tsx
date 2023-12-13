@@ -34,7 +34,7 @@ export const LoginModal = () => {
   return (
     <dialog id="login_modal" className="modal">
       <div className="modal-box flex flex-col no-scrollbar">
-        <h3 className="font-bold text-xl text-center">Login</h3>
+        <h3 className="font-bold text-xl text-center text-text-primary">Login</h3>
         <form className="form-control w-full" onSubmit={handleLogin}>
           <label className="form-control w-full">
             <div className="label">
@@ -76,7 +76,7 @@ export const LoginModal = () => {
         </form>
       </div>
       <form method="dialog" className="modal-backdrop focus:border-none bg-backdrop">
-        <button>close</button>
+        <button className="cursor-default">close</button>
       </form>
     </dialog>
   );
