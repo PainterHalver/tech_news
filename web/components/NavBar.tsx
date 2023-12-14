@@ -1,34 +1,12 @@
 "use client";
 
-import { useAuthStore } from "@/lib/zustand/AuthStore";
 import Link from "next/link";
-import { useEffect } from "react";
 
-import axios from "@/lib/axios";
-import Axios from "axios";
+import { useSession } from "next-auth/react";
 
 const NavBar = () => {
-  const authenticated = useAuthStore((state) => state.authenticated);
-  const user = useAuthStore((state) => state.user);
-  const login = useAuthStore((state) => state.login);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const res = await axios.get("/api/auth/me");
-        if (res.status === 200) {
-          login(res.data.data.user);
-        }
-      } catch (error) {
-        if (Axios.isAxiosError(error)) {
-          if (error.response?.status === 401) {
-            return useAuthStore.setState({ authenticated: false, user: null });
-          }
-        }
-        console.log("AUTH/ME ERROR:", error);
-      }
-    })();
-  }, []);
+  const session = useSession();
+  const user = session?.data?.user;
 
   return (
     <div className="w-full flex bg-bg-primary border-b border-border sticky top-0 py-1 items-center">
@@ -37,7 +15,7 @@ const NavBar = () => {
           <p className="text-lg">Tech News</p>
         </Link>
       </div>
-      {authenticated ? (
+      {session.status === "authenticated" ? (
         <div className="flex-none gap-2">
           <div className="dropdown dropdown-end">
             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar mr-4">
