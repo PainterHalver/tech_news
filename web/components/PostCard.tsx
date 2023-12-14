@@ -67,7 +67,7 @@ export const PostCard = ({ post, isLast, addPage }: Props) => {
           <div className="btn btn-ghost btn-square btn-sm">
             <BiUpvote className="text-2xl" />
           </div>
-          <p className="text-base font-bold">{post.votes_count}</p>
+          <p className="text-base font-bold">{post.votes_score}</p>
         </div>
         <div className="flex gap-1 items-center">
           <div className="btn btn-ghost btn-square btn-sm">

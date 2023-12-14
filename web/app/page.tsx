@@ -45,7 +45,7 @@ export default function Home() {
           <PostCard post={post} key={post.id} isLast={index === posts.length - 1} addPage={() => setPage(page + 1)} />
         ))}
         {/* add per_page skeleton*/}
-        {fetching && Array.from({ length: PER_PAGE }).map((_, index) => <PostCardSkeleton key={index} />)}
+        {fetching && Array.from({ length: PER_PAGE }).map((_, index) => <PostCardSkeleton key={index + 100000} />)}
       </div>
       <PostModal />
     </main>

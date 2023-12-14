@@ -42,7 +42,7 @@ export default async function Post({ params }: Props) {
 
   return (
     <main className="flex lg:px-16 min-h-full justify-center">
-      <main className="border-[0.5px] border-border flex-1 flex flex-col">
+      <main className="border-[0.5px] border-border flex-1 flex flex-col max-w-4xl">
         <div className="w-full h-fit">
           <Image
             src={post.image}

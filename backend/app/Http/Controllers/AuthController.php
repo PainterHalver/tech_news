@@ -59,4 +59,16 @@ class AuthController extends Controller
             'success' => 1,
         ], 200);
     }
+
+    public function me(Request $request): JsonResponse
+    {
+        $user = $request->user();
+
+        return response()->json([
+            'success' => 1,
+            'data' => [
+                'user' => $user
+            ]
+        ], 200);
+    }
 }

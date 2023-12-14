@@ -29,8 +29,9 @@ export type Post = {
   created_at: Date;
   updated_at: Date;
   publisher: Publisher;
-  votes_count: number;
+  votes_score: number;
   comments_count: number;
+  user_vote?: -1 | 0 | 1;
 };
 
 export type Paginated<T> = {

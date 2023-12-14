@@ -2,10 +2,33 @@
 
 import { useAuthStore } from "@/lib/zustand/AuthStore";
 import Link from "next/link";
+import { useEffect } from "react";
+
+import axios from "@/lib/axios";
+import Axios from "axios";
 
 const NavBar = () => {
   const authenticated = useAuthStore((state) => state.authenticated);
   const user = useAuthStore((state) => state.user);
+  const login = useAuthStore((state) => state.login);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await axios.get("/api/auth/me");
+        if (res.status === 200) {
+          login(res.data.data.user);
+        }
+      } catch (error) {
+        if (Axios.isAxiosError(error)) {
+          if (error.response?.status === 401) {
+            return useAuthStore.setState({ authenticated: false, user: null });
+          }
+        }
+        console.log("AUTH/ME ERROR:", error);
+      }
+    })();
+  }, []);
 
   return (
     <div className="w-full flex bg-bg-primary border-b border-border sticky top-0 py-1 items-center">
