@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PostsController extends Controller
 {
@@ -18,17 +20,21 @@ class PostsController extends Controller
 
         $posts = Post::latest()->with('publisher')
             ->withCount(['comments as comments_count'])
-            ->withCount(['votes as votes_score' => function ($query) {
-                $query->selectRaw('sum(votes.value)');
-            }]);
+            ->addSelect([
+                'votes_score' => DB::table('votes')
+                    ->selectRaw('CAST(IFNULL(SUM(value), 0) AS INTEGER)')
+                    ->whereColumn('post_id', 'posts.id'),
+            ]);
 
         $user = Auth::guard('sanctum')->user();
         if ($user) {
-            $posts->selectRaw('votes.value as user_vote')
-                ->leftJoin('votes', function ($join) use ($user) {
-                    $join->on('votes.post_id', '=', 'posts.id')
-                        ->where('votes.user_id', '=', $user->id);
-                });
+            $posts->addSelect([
+                'user_vote' => DB::table('votes')
+                    ->selectRaw('IFNULL(value, 0)')
+                    ->whereColumn('post_id', 'posts.id')
+                    ->where('user_id', $user->id)
+                    ->limit(1),
+            ]);
         }
 
         $posts = $posts->paginate($perPage);
@@ -40,9 +46,7 @@ class PostsController extends Controller
     {
         $post->load('publisher');
         $post->loadCount('comments as comments_count');
-        $post->loadCount(['votes as votes_score' => function ($query) {
-            $query->selectRaw('sum(votes.value)');
-        }]);
+        $post->vote_score = $post->votes()->sum('value');
 
         // if logged in user, check if voted
         $user = Auth::guard('sanctum')->user();

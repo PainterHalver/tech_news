@@ -5,3 +5,8 @@ export const trimString = (str: string, length: number) => {
 
   return str;
 };
+
+export const showModal = (id: string) => {
+  const modal = document.getElementById(id);
+  (modal as any).showModal();
+};
