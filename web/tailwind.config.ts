@@ -21,6 +21,7 @@ const config: Config = {
       "text-primary": "var(--text-primary)",
       "text-secondary": "var(--text-secondary)",
       backdrop: "var(--backdrop)",
+      upvoted: "var(--upvoted)",
     },
   },
   plugins: [require("daisyui")],

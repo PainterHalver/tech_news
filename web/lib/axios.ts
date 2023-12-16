@@ -21,6 +21,7 @@ api.interceptors.request.use(async (config) => {
   } else {
     // const token = document.cookie.replace(/(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/, "$1");
     const token = localStorage.getItem("token");
+    console.log({ token });
 
     if (token) {
       config.headers["Authorization"] = `Bearer ${token}`;

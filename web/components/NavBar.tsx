@@ -2,11 +2,30 @@
 
 import Link from "next/link";
 
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
+import { useEffect } from "react";
 
 const NavBar = () => {
   const session = useSession();
   const user = session?.data?.user;
+
+  const handleLogout = async () => {
+    try {
+      const response = await signOut({ redirect: true });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (!session) return;
+
+    if (session.status === "authenticated" && session.data?.token) {
+      localStorage.setItem("token", session.data.token);
+    } else if (session.status === "unauthenticated") {
+      localStorage.removeItem("token");
+    }
+  }, [session]);
 
   return (
     <div className="w-full flex bg-bg-primary border-b border-border sticky top-0 py-1 items-center">
@@ -34,7 +53,9 @@ const NavBar = () => {
                 <a className="text-base">Settings</a>
               </li>
               <li>
-                <a className="text-base">Logout</a>
+                <a className="text-base" onClick={handleLogout}>
+                  Logout
+                </a>
               </li>
             </ul>
           </div>

@@ -10,6 +10,7 @@
   --text-primary: #ffffff;
   --text-secondary: #a8b3cf;
   --backdrop: #00000066;
+  --upvoted: #39e58c;
 }
 
 .no-scrollbar::-webkit-scrollbar {

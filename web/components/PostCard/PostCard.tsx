@@ -5,8 +5,9 @@ import { trimString } from "@/lib/utils";
 import moment from "moment";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BiCommentDetail, BiShareAlt, BiUpvote } from "react-icons/bi";
+import UpvoteButton from "./UpvoteButton";
 
 type Props = {
   post: Post;
@@ -15,6 +16,7 @@ type Props = {
 };
 
 export const PostCard = ({ post, isLast, addPage }: Props) => {
+  const [vote, setVote] = useState(post.user_vote);
   const cardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -64,9 +66,7 @@ export const PostCard = ({ post, isLast, addPage }: Props) => {
       <h2 className="px-3 text-lg font-bold text-text-primary">{trimString(post.title, 90)}</h2>
       <div className="px-3 mt-auto border-t border-border flex justify-between py-2">
         <div className="flex gap-1 items-center">
-          <div className="btn btn-ghost btn-square btn-sm">
-            <BiUpvote className="text-2xl" />
-          </div>
+          <UpvoteButton post={post} />
           <p className="text-base font-bold">{post.votes_score}</p>
         </div>
         <div className="flex gap-1 items-center">

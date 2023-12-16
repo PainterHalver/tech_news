@@ -1,7 +1,7 @@
 "use client";
 
-import { PostCard } from "@/components/PostCard";
-import { PostCardSkeleton } from "@/components/PostCardSkeleton";
+import { PostCard } from "@/components/PostCard/PostCard";
+import { PostCardSkeleton } from "@/components/PostCard/PostCardSkeleton";
 import { PostModal } from "@/components/PostModal";
 import { Paginated, Post } from "@/lib/types";
 import { useEffect, useState } from "react";

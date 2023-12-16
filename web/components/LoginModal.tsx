@@ -1,15 +1,12 @@
 "use client";
-import { useState } from "react";
-import axios from "@/lib/axios";
-import { useAuthStore } from "@/lib/zustand/AuthStore";
-import { User } from "@/lib/types";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export const LoginModal = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const login = useAuthStore((state) => state.login);
 
   const handleLogin = async () => {
     try {
@@ -18,16 +15,9 @@ export const LoginModal = () => {
       if (response && !response.error) {
         const modal = document.getElementById("login_modal");
         (modal as any).close();
+
+        document.location.reload();
       }
-
-      // if (data.token) {
-      //   localStorage.setItem("token", data.token);
-      // }
-
-      // login(data.user as User);
-
-      // const modal = document.getElementById("login_modal");
-      // (modal as any).close();
     } catch (error) {
       console.log(error);
     } finally {

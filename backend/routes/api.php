@@ -18,4 +18,8 @@ Route::prefix('auth')->group(function () {
 Route::prefix('posts')->group(function() {
     Route::get('/', [PostsController::class, 'index']);
     Route::get('/{post}', [PostsController::class, 'show']);
+
+    Route::middleware('auth:sanctum')->group(function() {
+       Route::post('/{post}/votes', [PostsController::class, 'vote']);
+    });
 });
