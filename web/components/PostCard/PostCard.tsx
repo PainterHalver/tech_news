@@ -7,7 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { BiCommentDetail, BiShareAlt, BiUpvote } from "react-icons/bi";
-import UpvoteButton from "./UpvoteButton";
+import UpvoteButton from "../UpvoteButton";
 
 import axios from "@/lib/axios";
 import { useSession } from "next-auth/react";

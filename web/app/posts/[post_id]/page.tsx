@@ -1,44 +1,50 @@
+"use client";
+
 import { trimString } from "@/lib/utils";
-import { Metadata, ResolvingMetadata } from "next";
-import { Post } from "@/lib/types";
-import { redirect } from "next/navigation";
-import { TbShare3 } from "react-icons/tb";
-import Link from "next/link";
-import Image from "next/image";
-import PostDescription from "./PostDescription";
 import moment from "moment";
+import Image from "next/image";
+import Link from "next/link";
+import { TbShare3 } from "react-icons/tb";
+import PostDescription from "./PostDescription";
+import { useEffect, useState } from "react";
+import { redirect } from "next/navigation";
+import axios from "@/lib/axios";
+import { Post } from "@/lib/types";
+import UpvoteButton from "@/components/UpvoteButton";
+import DownvoteButton from "@/components/DownvoteButton";
+import { BiCommentDetail, BiShareAlt } from "react-icons/bi";
+import CommentBox from "./CommentBox";
 
 type Props = {
   params: { post_id: string };
 };
 
-const getPost = async (post_id: string) => {
-  const res = await fetch(process.env.NEXT_PUBLIC_API_URL + "/api/posts/" + post_id, { next: { revalidate: 2 } });
-  const post = await res.json();
-  return post as Post;
-};
+export default function PostPage({ params }: Props) {
+  const [post, setPost] = useState<Post>();
+  const [userVote, setUserVote] = useState(0);
+  const [votesScore, setVotesScore] = useState(0);
 
-export async function generateMetadata({ params }: Props, parent: ResolvingMetadata): Promise<Metadata> {
-  try {
-    const post = await getPost(params.post_id);
+  const getPost = async (post_id: string) => {
+    try {
+      const res = await axios.get<Post>(`/api/posts/${post_id}`);
+      const post = res.data;
+      return post;
+    } catch (error) {
+      console.log("GET POST ERROR: ", error);
+      redirect("/404");
+    }
+  };
 
-    return {
-      title: "Tech News | " + post.title,
-      description: trimString(post.description, 100),
-      openGraph: {
-        images: [post.image],
-        type: "article",
-      },
-      metadataBase: new URL("http://localhost:3000/posts/" + post.id),
-    };
-  } catch (error) {
-    console.log("POST METADATA ERROR:", error);
-    redirect("/404");
-  }
-}
+  useEffect(() => {
+    (async () => {
+      const postData = await getPost(params.post_id);
+      setPost(postData);
+      setUserVote(postData.user_vote || 0);
+      setVotesScore(postData.votes_score);
+    })();
+  }, []);
 
-export default async function Post({ params }: Props) {
-  const post = await getPost(params.post_id);
+  if (!post) return "loading....";
 
   return (
     <main className="flex lg:px-16 min-h-full justify-center">
@@ -57,6 +63,25 @@ export default async function Post({ params }: Props) {
           <h1 className="text-3xl font-bold text-text-primary">{post.title}</h1>
           <p className="text-sm py-2">{moment(post.published_at).fromNow()}</p>
           <PostDescription post={post} />
+        </div>
+        <div className="flex justify-between border-y border-border py-2 px-5">
+          <div className="flex items-center gap-2">
+            <UpvoteButton userVote={userVote} onClick={() => {}} className="btn-md text-3xl" />
+            <DownvoteButton userVote={userVote} onClick={() => {}} className="btn-md text-3xl" />
+            <p className="font-bold">{votesScore}</p>
+          </div>
+          <div className="flex items-center gap-2 group hover:cursor-pointer hover:text-[chocolate] btn btn-ghost btn-md">
+            <BiCommentDetail className="text-3xl" />
+            <p className="font-bold text-lg">Comment</p>
+          </div>
+          <button className="flex items-center gap-2 group hover:cursor-pointer hover:text-[cyan] btn btn-ghost btn-md">
+            <BiShareAlt className="text-3xl" />
+            <p className="font-bold text-lg">Share</p>
+          </button>
+        </div>
+
+        <div className="mx-7 my-7">
+          <CommentBox post={post} />
         </div>
       </main>
 

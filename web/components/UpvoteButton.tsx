@@ -9,8 +9,8 @@ type Props = {
 
 export default function UpvoteButton({ userVote, className, onClick }: Props) {
   return (
-    <button className={`btn btn-ghost btn-square btn-sm ${className}`} onClick={onClick}>
-      <BiUpvote className={`text-2xl ${userVote === 1 && "text-upvoted"}`} />
+    <button className={`text-2xl btn btn-ghost btn-square btn-sm ${className}`} onClick={onClick}>
+      <BiUpvote className={`${userVote === 1 && "text-upvoted"}`} />
     </button>
   );
 }

@@ -46,7 +46,7 @@ class PostsController extends Controller
     {
         $post->load('publisher');
         $post->loadCount('comments as comments_count');
-        $post->vote_score = $post->votes()->sum('value');
+        $post->votes_score = $post->votes()->sum('value');
 
         // if logged in user, check if voted
         $user = Auth::guard('sanctum')->user();
