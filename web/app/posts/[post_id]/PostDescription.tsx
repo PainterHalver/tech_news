@@ -19,7 +19,7 @@ export default function PostDescription({ post }: Props) {
 
   return (
     <div>
-      <p className="text-text-primary font-[300]">
+      <p className="text-text-primary font-[300] whitespace-pre-line">
         {shouldShowFullDescription ? post.description : trimString(post.description, PREVIEW_LENGTH)}
         &nbsp;&nbsp;
         <span className="link link-hover text-text-secondary" onClick={toggleDescription}>

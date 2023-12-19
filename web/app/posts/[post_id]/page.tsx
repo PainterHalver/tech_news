@@ -1,19 +1,19 @@
 "use client";
 
+import axios from "@/lib/axios";
+import { Post } from "@/lib/types";
 import { trimString } from "@/lib/utils";
 import moment from "moment";
 import Image from "next/image";
 import Link from "next/link";
-import { TbShare3 } from "react-icons/tb";
-import PostDescription from "./PostDescription";
-import { useEffect, useState } from "react";
 import { redirect } from "next/navigation";
-import axios from "@/lib/axios";
-import { Post } from "@/lib/types";
-import UpvoteButton from "@/components/UpvoteButton";
-import DownvoteButton from "@/components/DownvoteButton";
+import { useEffect, useState } from "react";
 import { BiCommentDetail, BiShareAlt } from "react-icons/bi";
-import CommentBox from "./CommentBox";
+import { TbShare3 } from "react-icons/tb";
+import PostCommentBox from "./PostCommentBox";
+import PostDescription from "./PostDescription";
+import PostVotes from "./PostVotes";
+import PostSkeleton from "./PostSkeleton";
 
 type Props = {
   params: { post_id: string };
@@ -21,8 +21,6 @@ type Props = {
 
 export default function PostPage({ params }: Props) {
   const [post, setPost] = useState<Post>();
-  const [userVote, setUserVote] = useState(0);
-  const [votesScore, setVotesScore] = useState(0);
 
   const getPost = async (post_id: string) => {
     try {
@@ -39,16 +37,14 @@ export default function PostPage({ params }: Props) {
     (async () => {
       const postData = await getPost(params.post_id);
       setPost(postData);
-      setUserVote(postData.user_vote || 0);
-      setVotesScore(postData.votes_score);
     })();
   }, []);
 
-  if (!post) return "loading....";
+  if (!post) return <PostSkeleton />;
 
   return (
-    <main className="flex lg:px-16 min-h-full justify-center">
-      <main className="border-[0.5px] border-border flex-1 flex flex-col max-w-4xl">
+    <main className="flex min-h-full justify-center flex-col md:flex-row">
+      <main className="border-[0.5px] border-border flex-1 flex flex-col max-w-3xl">
         <div className="w-full h-fit">
           <Image
             src={post.image}
@@ -65,11 +61,7 @@ export default function PostPage({ params }: Props) {
           <PostDescription post={post} />
         </div>
         <div className="flex justify-between border-y border-border py-2 px-5">
-          <div className="flex items-center gap-2">
-            <UpvoteButton userVote={userVote} onClick={() => {}} className="btn-md text-3xl" />
-            <DownvoteButton userVote={userVote} onClick={() => {}} className="btn-md text-3xl" />
-            <p className="font-bold">{votesScore}</p>
-          </div>
+          <PostVotes post={post} />
           <div className="flex items-center gap-2 group hover:cursor-pointer hover:text-[chocolate] btn btn-ghost btn-md">
             <BiCommentDetail className="text-3xl" />
             <p className="font-bold text-lg">Comment</p>
@@ -80,19 +72,19 @@ export default function PostPage({ params }: Props) {
           </button>
         </div>
 
-        <div className="mx-7 my-7">
-          <CommentBox post={post} />
+        <div className="mx-10 my-6 flex flex-col gap-5">
+          <PostCommentBox post={post} />
         </div>
       </main>
 
-      <aside className="border-[0.5px] border-border w-72 flex flex-col px-3 py-5 gap-5">
+      <aside className="border-[0.5px] border-border w-full md:w-72 flex flex-col px-3 py-5 gap-5">
         <Link target="_blank" href={post.link} className="btn btn-outline font-bold text-base text-text-primary">
           <TbShare3 className="text-xl" /> Read post
         </Link>
         <div className="border border-border rounded-2xl flex">
           <div className="h-fit pl-2 py-2 flex items-center mr-2">
             <Image
-              src={post.publisher.image}
+              src={`/images/${post.publisher.name}.jpg`}
               alt={`Icon image for publisher ${post.title}`}
               sizes="100vw"
               width={0}

@@ -10,14 +10,14 @@ type Props = {
   post: Post;
 };
 
-export default function CommentBox({ post }: Props) {
+export default function PostCommentBox({ post }: Props) {
   const [comment, setComment] = useState("");
 
   const session = useSession();
   const user = session?.data?.user;
 
   return (
-    <div className="flex flex-col border border-border">
+    <div className="flex flex-col border border-border rounded-lg">
       <div className="flex gap-3 px-3 py-3 items-center">
         <div className="avatar">
           <div className="w-10 rounded-xl">
@@ -30,7 +30,7 @@ export default function CommentBox({ post }: Props) {
         name="comment"
         id="comment"
         cols={30}
-        rows={6}
+        rows={3}
         className="focus:outline-none px-3 py-2 bg-bg-primary border-y border-border"
         value={comment}
         placeholder="Write your comment here..."

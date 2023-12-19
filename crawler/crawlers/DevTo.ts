@@ -24,10 +24,16 @@ export default class DevTo extends Crawler {
           dom.window.document.querySelector("#main-title > a > img")?.getAttribute("src") ||
           "https://camo.githubusercontent.com/583a3488209bd62b2ee7985cd8b55a27b44c79d66a2109782d280a31976851a9/68747470733a2f2f74686570726163746963616c6465762e73332e616d617a6f6e6177732e636f6d2f692f726f3335333862793362326675706273363373722e706e67";
 
+        const descriptionNodes = new JSDOM(item.description).window.document.querySelectorAll("p");
+        let description = "";
+        descriptionNodes.forEach((node) => {
+          description += node.textContent + "\n";
+        });
+
         const post: Post = {
           publisher_id: this.publisher_id,
           title: item.title,
-          description: item.description,
+          description: description,
           image: image_link,
           link: item.link,
           published_at: new Date(item.pubDate),

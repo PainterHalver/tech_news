@@ -80,7 +80,7 @@ export const PostCard = ({ post, isLast, addPage }: Props) => {
       </div>
       <div className="h-fit pl-2 py-2 flex items-center">
         <Image
-          src={post.publisher.image}
+          src={`/images/${post.publisher.name}.jpg`}
           alt={`Icon image for publisher ${post.title}`}
           sizes="100vw"
           width={0}
