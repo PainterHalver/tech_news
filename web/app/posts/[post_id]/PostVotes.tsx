@@ -22,12 +22,18 @@ export default function PostVotes({ post }: Props) {
     if (session.status !== "authenticated") return showModal("login_modal");
 
     const oldUserVote = userVote;
+    const oldVoteScore = votesScore;
     try {
-      setUserVote(oldUserVote === 1 ? 0 : 1);
-      setVotesScore((prev) => prev + (oldUserVote === 1 ? -1 : 1));
+      const newUserVote = oldUserVote === 1 ? 0 : 1;
+      let newVoteScore = oldVoteScore;
+      if (userVote === 0) newVoteScore += 1;
+      else if (userVote === -1) newVoteScore += 2;
+      else if (userVote === 1) newVoteScore -= 1;
 
+      setUserVote(newUserVote);
+      setVotesScore(newVoteScore);
       const response = await axios.post(`/api/posts/${post.id}/votes`, {
-        value: oldUserVote === 1 ? 0 : 1,
+        value: newUserVote,
       });
       if (response.status !== 200) {
         throw new Error("Something went wrong");
@@ -35,7 +41,7 @@ export default function PostVotes({ post }: Props) {
     } catch (error) {
       console.log("HANDLE UPVOTE ERROR: ", error);
       setUserVote(oldUserVote);
-      setVotesScore((prev) => prev - (oldUserVote === 1 ? -1 : 1));
+      setVotesScore(oldVoteScore);
     }
   };
 
@@ -44,12 +50,18 @@ export default function PostVotes({ post }: Props) {
     if (session.status !== "authenticated") return showModal("login_modal");
 
     const oldUserVote = userVote;
+    const oldVoteScore = votesScore;
     try {
-      setUserVote(oldUserVote === -1 ? 0 : -1);
-      setVotesScore((prev) => prev + (oldUserVote === -1 ? 1 : -1));
+      const newUserVote = oldUserVote === -1 ? 0 : -1;
+      let newVoteScore = votesScore;
+      if (userVote === 0) newVoteScore -= 1;
+      else if (userVote === 1) newVoteScore -= 2;
+      else if (userVote === -1) newVoteScore += 1;
 
+      setUserVote(newUserVote);
+      setVotesScore(newVoteScore);
       const response = await axios.post(`/api/posts/${post.id}/votes`, {
-        value: oldUserVote === -1 ? 0 : -1,
+        value: newUserVote,
       });
       if (response.status !== 200) {
         throw new Error("Something went wrong");
@@ -57,7 +69,7 @@ export default function PostVotes({ post }: Props) {
     } catch (error) {
       console.log("HANDLE DOWNVOTE ERROR: ", error);
       setUserVote(oldUserVote);
-      setVotesScore((prev) => prev - (oldUserVote === -1 ? 1 : -1));
+      setVotesScore(oldVoteScore);
     }
   };
 

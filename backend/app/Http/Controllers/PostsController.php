@@ -18,13 +18,13 @@ class PostsController extends Controller
         ]);
         $perPage = $fields['per_page'] ?? 10;
 
-        $posts = Post::latest()->with('publisher')
+        $posts = Post::with('publisher')
             ->withCount(['comments as comments_count'])
             ->addSelect([
                 'votes_score' => DB::table('votes')
                     ->selectRaw('CAST(IFNULL(SUM(value), 0) AS INTEGER)')
                     ->whereColumn('post_id', 'posts.id'),
-            ]);
+            ])->orderBy('published_at', 'desc');
 
         $user = Auth::guard('sanctum')->user();
         if ($user) {
