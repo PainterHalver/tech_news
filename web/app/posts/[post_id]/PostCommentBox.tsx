@@ -1,20 +1,39 @@
 "use client";
 
-import { Post } from "@/lib/types";
+import { Comment, Post } from "@/lib/types";
 import { trimString } from "@/lib/utils";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useState } from "react";
+import axios from "@/lib/axios";
 
 type Props = {
   post: Post;
+  setComments: React.Dispatch<React.SetStateAction<Comment[]>>;
 };
 
-export default function PostCommentBox({ post }: Props) {
+export default function PostCommentBox({ post, setComments }: Props) {
   const [comment, setComment] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const session = useSession();
   const user = session?.data?.user;
+
+  const postComment = async () => {
+    try {
+      setLoading(true);
+      const res = await axios.post<Comment>(`/api/posts/${post.id}/comments`, {
+        content: comment,
+      });
+      const commentData = res.data;
+      setComments((prev) => [commentData, ...prev]);
+      setComment("");
+    } catch (error) {
+      console.log("POST COMMENT ERROR: ", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="flex flex-col border border-border rounded-lg">
@@ -37,8 +56,8 @@ export default function PostCommentBox({ post }: Props) {
         onChange={(e) => setComment(e.target.value)}
       ></textarea>
       <div className="flex gap-3 px-3 py-2 justify-end">
-        <button className="btn btn-primary btn-sm" disabled={comment.length === 0}>
-          Post Comment
+        <button className="btn btn-primary btn-sm" disabled={comment.length === 0 || loading} onClick={postComment}>
+          {loading ? <span className="loading loading-spinner"></span> : "Submit"}
         </button>
       </div>
     </div>

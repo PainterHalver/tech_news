@@ -34,6 +34,16 @@ export type Post = {
   user_vote?: -1 | 0 | 1;
 };
 
+export type Comment = {
+  id: number;
+  post_id: number;
+  user_id: number;
+  content: string;
+  created_at: Date;
+  updated_at: Date;
+  user: User;
+};
+
 export type Paginated<T> = {
   data: T[];
   current_page: number;

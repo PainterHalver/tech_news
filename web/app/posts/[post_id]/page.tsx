@@ -1,7 +1,7 @@
 "use client";
 
 import axios from "@/lib/axios";
-import { Post } from "@/lib/types";
+import { Comment, Post } from "@/lib/types";
 import { trimString } from "@/lib/utils";
 import moment from "moment";
 import Image from "next/image";
@@ -14,6 +14,7 @@ import PostCommentBox from "./PostCommentBox";
 import PostDescription from "./PostDescription";
 import PostVotes from "./PostVotes";
 import PostSkeleton from "./PostSkeleton";
+import PostComments from "./PostComments";
 
 type Props = {
   params: { post_id: string };
@@ -21,6 +22,7 @@ type Props = {
 
 export default function PostPage({ params }: Props) {
   const [post, setPost] = useState<Post>();
+  const [comments, setComments] = useState<Comment[]>([]);
 
   const getPost = async (post_id: string) => {
     try {
@@ -73,7 +75,8 @@ export default function PostPage({ params }: Props) {
         </div>
 
         <div className="mx-10 my-6 flex flex-col gap-5">
-          <PostCommentBox post={post} />
+          <PostCommentBox post={post} setComments={setComments} />
+          <PostComments post={post} comments={comments} setComments={setComments} />
         </div>
       </main>
 
