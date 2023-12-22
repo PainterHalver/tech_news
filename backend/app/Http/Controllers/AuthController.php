@@ -22,7 +22,7 @@ class AuthController extends Controller
             ], 401);
         }
 
-        $user->tokens()->delete();
+//        $user->tokens()->delete();
         $token = $user->createToken($user->username)->plainTextToken;
 
         return response()->json([
@@ -37,6 +37,7 @@ class AuthController extends Controller
     public function signup(SignupRequest $request): JsonResponse
     {
         $fields = $request->validated();
+        $fields['password'] = md5($fields['password']);
 
         $user = User::create($fields);
         $token = $user->createToken($user->username)->plainTextToken;

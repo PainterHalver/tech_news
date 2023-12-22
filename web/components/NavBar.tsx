@@ -39,7 +39,7 @@ const NavBar = () => {
           <div className="dropdown dropdown-end">
             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar mr-4">
               <div className="w-8 rounded-full">
-                <img alt={`Profile Picture of ${user?.full_name}`} src={user!.avatar} />
+                <img alt={`Profile Picture of ${user?.full_name}`} src={user?.avatar || "/images/default-avatar.jpg"} />
               </div>
             </div>
             <ul

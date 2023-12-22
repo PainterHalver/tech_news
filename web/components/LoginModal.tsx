@@ -1,25 +1,31 @@
 "use client";
+import { showModal } from "@/lib/utils";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 export const LoginModal = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [loginError, setLoginError] = useState(false);
 
   const handleLogin = async () => {
     try {
       setLoading(true);
+      setLoginError(false);
       const response = await signIn("credentials", { username, password, redirect: false });
       if (response && !response.error) {
         const modal = document.getElementById("login_modal");
         (modal as any).close();
 
         document.location.reload();
+      } else {
+        setLoginError(true);
       }
     } catch (error) {
       console.log(error);
+      toast.error("Unable to login. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -37,13 +43,10 @@ export const LoginModal = () => {
             <input
               type="text"
               placeholder="Type here"
-              className="input input-bordered w-full"
+              className={`input input-bordered w-full ${loginError ? "input-error" : ""}`}
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
-            <div className="label">
-              <span className="label-text-alt hidden">Bottom Left label</span>
-            </div>
           </label>
           <label className="form-control w-full">
             <div className="label">
@@ -52,17 +55,19 @@ export const LoginModal = () => {
             <input
               type="password"
               placeholder="Type here"
-              className="input input-bordered w-full"
+              className={`input input-bordered w-full ${loginError ? "input-error" : ""}`}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <div className="label">
-              <span className="label-text-alt hidden">Bottom Left label</span>
-            </div>
           </label>
-          <p>
+          <p className={`${loginError ? "text-downvoted" : "hidden"} pt-2`}>Invalid credentials</p>
+          <p className="pt-2">
             New user? &nbsp;
-            <a className="link hover:opacity-100 opacity-90">Register here</a>
+            <form method="dialog" className="inline">
+              <button className="link hover:opacity-100 opacity-90" onClick={() => showModal("register_modal")}>
+                Register here
+              </button>
+            </form>
           </p>
           <button type="submit" className="btn btn-outline mt-3" disabled={loading} onClick={handleLogin}>
             {loading ? <span className="loading loading-spinner"></span> : "Submit"}
