@@ -1,6 +1,6 @@
 "use client";
 import axios from "@/lib/axios";
-import { showModal } from "@/lib/utils";
+import { closeModal, showModal } from "@/lib/utils";
 import Axios, { AxiosError } from "axios";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
@@ -131,11 +131,15 @@ export const RegisterModal = () => {
           </label>
           <p className="pt-2">
             Already registered? &nbsp;
-            <form method="dialog" className="inline">
-              <button className="link hover:opacity-100 opacity-90" onClick={() => showModal("login_modal")}>
-                Login here
-              </button>
-            </form>
+            <a
+              className="link hover:opacity-100 opacity-90"
+              onClick={() => {
+                closeModal("register_modal");
+                showModal("login_modal");
+              }}
+            >
+              Login here
+            </a>
           </p>
           <button type="submit" className="btn btn-outline mt-3" disabled={loading} onClick={handleRegister}>
             {loading ? <span className="loading loading-spinner"></span> : "Submit"}

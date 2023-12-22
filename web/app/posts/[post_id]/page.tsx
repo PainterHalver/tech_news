@@ -2,12 +2,12 @@
 
 import axios from "@/lib/axios";
 import { Comment, Post } from "@/lib/types";
-import { trimString } from "@/lib/utils";
+import { showModal, trimString } from "@/lib/utils";
 import moment from "moment";
 import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { BiCommentDetail, BiShareAlt } from "react-icons/bi";
 import { TbShare3 } from "react-icons/tb";
 import PostCommentBox from "./PostCommentBox";
@@ -15,6 +15,7 @@ import PostDescription from "./PostDescription";
 import PostVotes from "./PostVotes";
 import PostSkeleton from "./PostSkeleton";
 import PostComments from "./PostComments";
+import { useSession } from "next-auth/react";
 
 type Props = {
   params: { post_id: string };
@@ -23,6 +24,8 @@ type Props = {
 export default function PostPage({ params }: Props) {
   const [post, setPost] = useState<Post>();
   const [comments, setComments] = useState<Comment[]>([]);
+  const [showCommentBox, setShowCommentBox] = useState(false);
+  const session = useSession();
 
   const getPost = async (post_id: string) => {
     try {
@@ -33,6 +36,14 @@ export default function PostPage({ params }: Props) {
       console.log("GET POST ERROR: ", error);
       redirect("/404");
     }
+  };
+
+  const toggleCommentBox = () => {
+    if (!session || session.status !== "authenticated") {
+      showModal("login_modal");
+      return;
+    }
+    setShowCommentBox((prev) => !prev);
   };
 
   useEffect(() => {
@@ -64,7 +75,10 @@ export default function PostPage({ params }: Props) {
         </div>
         <div className="flex justify-between border-y border-border py-2 px-5">
           <PostVotes post={post} />
-          <div className="flex items-center gap-2 group hover:cursor-pointer hover:text-[chocolate] btn btn-ghost btn-md">
+          <div
+            className="flex items-center gap-2 group hover:cursor-pointer hover:text-[chocolate] btn btn-ghost btn-md"
+            onClick={toggleCommentBox}
+          >
             <BiCommentDetail className="text-3xl" />
             <p className="font-bold text-lg">Comment</p>
           </div>
@@ -75,7 +89,7 @@ export default function PostPage({ params }: Props) {
         </div>
 
         <div className="mx-10 my-6 flex flex-col gap-5">
-          <PostCommentBox post={post} setComments={setComments} />
+          {showCommentBox && <PostCommentBox post={post} setComments={setComments} />}
           <PostComments post={post} comments={comments} setComments={setComments} />
         </div>
       </main>

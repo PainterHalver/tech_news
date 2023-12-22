@@ -1,5 +1,5 @@
 "use client";
-import { showModal } from "@/lib/utils";
+import { closeModal, showModal } from "@/lib/utils";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
 import toast from "react-hot-toast";
@@ -63,11 +63,15 @@ export const LoginModal = () => {
           <p className={`${loginError ? "text-downvoted" : "hidden"} pt-2`}>Invalid credentials</p>
           <p className="pt-2">
             New user? &nbsp;
-            <form method="dialog" className="inline">
-              <button className="link hover:opacity-100 opacity-90" onClick={() => showModal("register_modal")}>
-                Register here
-              </button>
-            </form>
+            <a
+              className="link hover:opacity-100 opacity-90"
+              onClick={() => {
+                closeModal("login_modal");
+                showModal("register_modal");
+              }}
+            >
+              Register here
+            </a>
           </p>
           <button type="submit" className="btn btn-outline mt-3" disabled={loading} onClick={handleLogin}>
             {loading ? <span className="loading loading-spinner"></span> : "Submit"}

@@ -10,3 +10,8 @@ export const showModal = (id: string) => {
   const modal = document.getElementById(id);
   (modal as any).showModal();
 };
+
+export const closeModal = (id: string) => {
+  const modal = document.getElementById(id);
+  (modal as any).close();
+};
