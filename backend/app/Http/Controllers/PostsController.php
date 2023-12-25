@@ -23,7 +23,7 @@ class PostsController extends Controller
             ->withCount(['comments as comments_count'])
             ->addSelect([
                 'votes_score' => DB::table('votes')
-                    ->selectRaw('CAST(IFNULL(SUM(value), 0) AS INTEGER)')
+                    ->selectRaw('CAST(IFNULL(SUM(value), 0) AS SIGNED)')
                     ->whereColumn('post_id', 'posts.id'),
             ])->orderBy('published_at', 'desc');
 
