@@ -53,6 +53,7 @@ class PostsController extends Controller
         $user = Auth::guard('sanctum')->user();
         if ($user) {
             $post->user_vote = $post->votes()->where('user_id', $user->id)->first()->value ?? null;
+            $post->user_bookmarked = $post->bookmarkedUsers()->where('user_id', $user->id)->exists();
         }
 
         return response()->json($post, 200);
@@ -114,5 +115,23 @@ class PostsController extends Controller
         $comment->load('user');
 
         return response()->json($comment, 200);
+    }
+
+    public function toggleBookmark(Post $post, Request $request): JsonResponse
+    {
+        $user = $request->user();
+        $bookmarked = $post->bookmarkedUsers()->where('user_id', $user->id)->exists();
+        if ($bookmarked) {
+            $post->bookmarkedUsers()->detach($user->id);
+        } else {
+            $post->bookmarkedUsers()->attach($user->id);
+        }
+
+        return response()->json([
+            'success' => 1,
+            'data' => [
+                'bookmarked' => !$bookmarked,
+            ],
+        ], 200);
     }
 }

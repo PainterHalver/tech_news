@@ -4,18 +4,19 @@ import axios from "@/lib/axios";
 import { Comment, Post } from "@/lib/types";
 import { showModal, trimString } from "@/lib/utils";
 import moment from "moment";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { BiCommentDetail, BiShareAlt } from "react-icons/bi";
 import { TbShare3 } from "react-icons/tb";
+import BookmarkBox from "./BookmarkBox";
 import PostCommentBox from "./PostCommentBox";
-import PostDescription from "./PostDescription";
-import PostVotes from "./PostVotes";
-import PostSkeleton from "./PostSkeleton";
 import PostComments from "./PostComments";
-import { useSession } from "next-auth/react";
+import PostDescription from "./PostDescription";
+import PostSkeleton from "./PostSkeleton";
+import PostVotes from "./PostVotes";
 
 type Props = {
   params: { post_id: string };
@@ -98,6 +99,9 @@ export default function PostPage({ params }: Props) {
         <Link target="_blank" href={post.link} className="btn btn-outline font-bold text-base text-text-primary">
           <TbShare3 className="text-xl" /> Read post
         </Link>
+
+        <BookmarkBox post={post} />
+
         <div className="border border-border rounded-2xl flex">
           <div className="h-fit pl-2 py-2 flex items-center mr-2">
             <Image

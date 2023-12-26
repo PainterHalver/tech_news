@@ -32,6 +32,7 @@ export type Post = {
   votes_score: number;
   comments_count: number;
   user_vote?: -1 | 0 | 1;
+  user_bookmarked?: boolean;
 };
 
 export type Comment = {

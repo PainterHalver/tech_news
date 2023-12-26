@@ -23,5 +23,6 @@ Route::prefix('posts')->group(function() {
     Route::middleware('auth:sanctum')->group(function() {
        Route::post('/{post}/votes', [PostsController::class, 'vote']);
        Route::post('/{post}/comments', [PostsController::class, 'comment']);
+       Route::post('/{post}/bookmarks', [PostsController::class, 'toggleBookmark']);
     });
 });

@@ -30,9 +30,9 @@ class User extends Authenticatable
         return $this->hasMany(Vote::class);
     }
 
-    public function bookmarks()
+    public function bookmarkedPosts()
     {
-        return $this->hasMany(Bookmark::class);
+        return $this->belongsToMany(Post::class, 'bookmarks');
     }
 
     public function comments()
