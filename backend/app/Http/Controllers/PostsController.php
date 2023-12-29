@@ -16,8 +16,10 @@ class PostsController extends Controller
     {
         $fields = $request->validate([
             'per_page' => 'integer',
+            'bookmark' => 'boolean',
         ]);
         $perPage = $fields['per_page'] ?? 10;
+        $bookmark = $fields['bookmark'] ?? false;
 
         $posts = Post::with('publisher')
             ->withCount(['comments as comments_count'])
@@ -36,6 +38,12 @@ class PostsController extends Controller
                     ->where('user_id', $user->id)
                     ->limit(1),
             ]);
+
+            if ($bookmark) {
+                $posts->whereHas('bookmarkedUsers', function ($query) use ($user) {
+                    $query->where('user_id', $user->id);
+                });
+            }
         }
 
         $posts = $posts->paginate($perPage);

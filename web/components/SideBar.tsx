@@ -20,17 +20,17 @@ export default async function SideBar() {
           </Link>
         </li>
         <li>
-          <Link href={"/"}>
+          <Link href={"/loved"}>
             <AiOutlineFire className="text-lg" /> Most loved
           </Link>
         </li>
         <li>
-          <Link href={"/"}>
+          <Link href={"/discussed"}>
             <PiChatCircleDots className="text-lg" /> Most discussed
           </Link>
         </li>
         <li>
-          <Link href={"/"}>
+          <Link href={"/search"}>
             <IoSearchOutline className="text-lg" /> Search
           </Link>
         </li>
