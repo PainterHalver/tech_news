@@ -2,6 +2,8 @@ import { Post } from "@/lib/types";
 import { useState } from "react";
 import { BsBookmark, BsBookmarkCheckFill } from "react-icons/bs";
 import axios from "@/lib/axios";
+import { useSession } from "next-auth/react";
+import { showModal } from "@/lib/utils";
 
 type Props = {
   post: Post;
@@ -9,8 +11,11 @@ type Props = {
 
 export default function BookmarkBox({ post }: Props) {
   const [bookmarked, setBookmarked] = useState(post.user_bookmarked);
+  const session = useSession();
 
   const toogleBookmark = async () => {
+    if (session.status !== "authenticated") return showModal("login_modal");
+
     const oldBookmarked = bookmarked;
     try {
       setBookmarked(!bookmarked);
