@@ -1,7 +1,7 @@
 "use client";
 
 import { Post } from "@/lib/types";
-import { showModal, trimString } from "@/lib/utils";
+import { handleShare, showModal, trimString } from "@/lib/utils";
 import moment from "moment";
 import Image from "next/image";
 import Link from "next/link";
@@ -108,7 +108,13 @@ export const PostCard = ({ post, isLast, addPage }: Props) => {
           </div>
           <p className="text-base font-bold">{post.comments_count}</p>
         </div>
-        <div className="btn btn-ghost btn-square btn-sm">
+        <div
+          className="btn btn-ghost btn-square btn-sm"
+          onClick={(e) => {
+            e.preventDefault();
+            handleShare(post.id);
+          }}
+        >
           <BiShareAlt className="text-2xl" />
         </div>
       </div>

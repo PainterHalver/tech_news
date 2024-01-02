@@ -2,7 +2,7 @@
 
 import axios from "@/lib/axios";
 import { Comment, Post } from "@/lib/types";
-import { showModal, trimString } from "@/lib/utils";
+import { handleShare, showModal, trimString } from "@/lib/utils";
 import moment from "moment";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
@@ -83,7 +83,10 @@ export default function PostPage({ params }: Props) {
             <BiCommentDetail className="text-3xl" />
             <p className="font-bold text-lg">Comment</p>
           </div>
-          <button className="flex items-center gap-2 group hover:cursor-pointer hover:text-[cyan] btn btn-ghost btn-md">
+          <button
+            className="flex items-center gap-2 group hover:cursor-pointer hover:text-[cyan] btn btn-ghost btn-md"
+            onClick={() => handleShare(post.id)}
+          >
             <BiShareAlt className="text-3xl" />
             <p className="font-bold text-lg">Share</p>
           </button>
