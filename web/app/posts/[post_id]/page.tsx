@@ -6,17 +6,16 @@ import { handleShare, showModal, trimString } from "@/lib/utils";
 import moment from "moment";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import Link from "next/link";
 import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
 import { BiCommentDetail, BiShareAlt } from "react-icons/bi";
-import { TbShare3 } from "react-icons/tb";
 import BookmarkBox from "./BookmarkBox";
 import PostCommentBox from "./PostCommentBox";
 import PostComments from "./PostComments";
 import PostDescription from "./PostDescription";
 import PostSkeleton from "./PostSkeleton";
 import PostVotes from "./PostVotes";
+import ReadPostButton from "./ReadPostButton";
 
 type Props = {
   params: { post_id: string };
@@ -99,9 +98,7 @@ export default function PostPage({ params }: Props) {
       </main>
 
       <aside className="border-[0.5px] border-border w-full md:w-72 flex flex-col px-3 py-5 gap-5">
-        <Link target="_blank" href={post.link} className="btn btn-outline font-bold text-base text-text-primary">
-          <TbShare3 className="text-xl" /> Read post
-        </Link>
+        <ReadPostButton post={post} />
 
         <BookmarkBox post={post} />
 

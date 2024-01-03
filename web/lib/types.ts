@@ -33,6 +33,10 @@ export type Post = {
   comments_count: number;
   user_vote?: -1 | 0 | 1;
   user_bookmarked?: boolean;
+  // view pivot
+  pivot?: {
+    updated_at: Date;
+  };
 };
 
 export type Comment = {

@@ -142,4 +142,35 @@ class PostsController extends Controller
             ],
         ], 200);
     }
+
+    public function view(Post $post, Request $request): JsonResponse
+    {
+        $user = $request->user();
+        $view = $post->views()->where('user_id', $user->id)->first();
+        if ($view) {
+            $view->touch();
+        } else {
+            $view = $post->views()->create([
+                'user_id' => $user->id,
+            ]);
+        }
+
+        return response()->json($view, 200);
+    }
+
+    public function history(Request $request): JsonResponse
+    {
+        $user = $request->user();
+        $posts = $user->viewedPosts()
+            ->with('publisher')
+            ->withCount(['comments as comments_count'])
+            ->addSelect([
+                'votes_score' => DB::table('votes')
+                    ->selectRaw('CAST(IFNULL(SUM(value), 0) AS SIGNED)')
+                    ->whereColumn('post_id', 'posts.id'),
+            ])->orderBy('views.updated_at', 'desc')
+            ->get();
+
+        return response()->json($posts, 200);
+    }
 }

@@ -49,4 +49,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(View::class);
     }
+
+    public function viewedPosts(): BelongsToMany
+    {
+        return $this->belongsToMany(Post::class, 'views')
+            ->withTimestamps();
+    }
 }
