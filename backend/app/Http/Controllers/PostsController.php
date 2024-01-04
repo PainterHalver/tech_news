@@ -17,9 +17,13 @@ class PostsController extends Controller
         $fields = $request->validate([
             'per_page' => 'integer',
             'bookmark' => 'boolean',
+            'sort_by' => 'string|in:votes_score,comments_count,published_at',
+            'sort_time' => 'string|in:week,month,year,all',
         ]);
         $perPage = $fields['per_page'] ?? 10;
         $bookmark = $fields['bookmark'] ?? false;
+        $sortBy = $fields['sort_by'] ?? 'published_at';
+        $sortTime = $fields['sort_time'] ?? 'all';
 
         $posts = Post::with('publisher')
             ->withCount(['comments as comments_count'])
@@ -27,7 +31,7 @@ class PostsController extends Controller
                 'votes_score' => DB::table('votes')
                     ->selectRaw('CAST(IFNULL(SUM(value), 0) AS SIGNED)')
                     ->whereColumn('post_id', 'posts.id'),
-            ])->orderBy('published_at', 'desc');
+            ]);
 
         $user = Auth::guard('sanctum')->user();
         if ($user) {
@@ -46,6 +50,14 @@ class PostsController extends Controller
             }
         }
 
+        // SORT
+        if ($sortTime !== 'all') {
+            $posts->where('published_at', '>=', now()->sub($sortTime, 1))
+                ->orderBy($sortBy, 'desc');
+        } else {
+            $posts->orderBy('published_at', 'desc');
+        }
+
         $posts = $posts->paginate($perPage);
 
         return response()->json($posts, 200);
@@ -55,7 +67,7 @@ class PostsController extends Controller
     {
         $post->load('publisher');
         $post->loadCount('comments as comments_count');
-        $post->votes_score = $post->votes()->sum('value');
+        $post->votes_score = (int) $post->votes()->sum('value');
 
         // if logged in user, check if voted
         $user = Auth::guard('sanctum')->user();
