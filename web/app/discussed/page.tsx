@@ -9,7 +9,7 @@ import axios from "@/lib/axios";
 
 const PER_PAGE = 10;
 
-export default function MostLoved() {
+export default function MostDiscussed() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [page, setPage] = useState(1);
   const [fetching, setFetching] = useState(false);
@@ -19,7 +19,7 @@ export default function MostLoved() {
     try {
       setFetching(true);
       const res = await axios.get(
-        `/api/posts?per_page=${PER_PAGE}&page=${page}&sort_by=votes_score&sort_time=${sortTime}`
+        `/api/posts?per_page=${PER_PAGE}&page=${page}&sort_by=comments_count&sort_time=${sortTime}`
       );
       const posts = res.data as Paginated<Post>;
       setPosts((prev) => [...prev, ...posts.data]);
@@ -42,7 +42,7 @@ export default function MostLoved() {
 
   return (
     <main className="flex flex-col py-5 lg:px-16 px-8 min-h-full">
-      <h1 className="text-xl font-bold mb-3">Most loved</h1>
+      <h1 className="text-xl font-bold mb-3">Most discussed</h1>
       <div role="tablist" className="tabs tabs-boxed w-fit">
         <a role="tab" className={`tab ${sortTime === "week" ? "tab-active" : ""}`} onClick={() => setSortTime("week")}>
           Last week
