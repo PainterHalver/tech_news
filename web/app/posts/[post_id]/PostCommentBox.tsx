@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useState } from "react";
 import axios from "@/lib/axios";
+import toast from "react-hot-toast";
 
 type Props = {
   post: Post;
@@ -28,6 +29,7 @@ export default function PostCommentBox({ post, setComments }: Props) {
       const commentData = res.data;
       setComments((prev) => [commentData, ...prev]);
       setComment("");
+      toast.success("Comment posted successfully");
     } catch (error) {
       console.log("POST COMMENT ERROR: ", error);
     } finally {

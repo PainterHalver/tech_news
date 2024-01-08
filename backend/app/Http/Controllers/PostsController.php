@@ -53,7 +53,7 @@ class PostsController extends Controller
         // SORT
         if ($sortTime !== 'all') {
             $posts->where('published_at', '>=', now()->sub($sortTime, 1))
-                ->orderBy($sortBy, 'desc');
+                ->orderBy($sortBy, 'desc')->orderBy('published_at', 'desc');
         } else {
             $posts->orderBy('published_at', 'desc');
         }
