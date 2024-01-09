@@ -16,6 +16,7 @@ export type Publisher = {
   link: string;
   created_at: Date;
   updated_at: Date;
+  user_followed?: boolean;
 };
 
 export type Post = {

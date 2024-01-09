@@ -2,7 +2,7 @@
 
 import axios from "@/lib/axios";
 import { Comment, Post } from "@/lib/types";
-import { handleShare, showModal, trimString } from "@/lib/utils";
+import { handleShare, showModal } from "@/lib/utils";
 import moment from "moment";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
@@ -15,6 +15,7 @@ import PostComments from "./PostComments";
 import PostDescription from "./PostDescription";
 import PostSkeleton from "./PostSkeleton";
 import PostVotes from "./PostVotes";
+import PublisherCard from "./PublisherCard";
 import ReadPostButton from "./ReadPostButton";
 
 type Props = {
@@ -102,22 +103,7 @@ export default function PostPage({ params }: Props) {
 
         <BookmarkBox post={post} />
 
-        <div className="border border-border rounded-2xl flex">
-          <div className="h-fit pl-2 py-2 flex items-center mr-2">
-            <Image
-              src={`/images/${post.publisher.name}.jpg`}
-              alt={`Icon image for publisher ${post.title}`}
-              sizes="100vw"
-              width={0}
-              height={0}
-              style={{ width: "45px", height: "auto", borderRadius: "50%" }}
-            />
-          </div>
-          <div className="flex flex-col justify-center gap-[2px]">
-            <span className="text-sm text-text-primary font-bold">{trimString(post.publisher.full_name, 23)}</span>
-            <span className="text-xs text-text-secondary">@{post.publisher.name}</span>
-          </div>
-        </div>
+        <PublisherCard publisher={post.publisher} />
       </aside>
     </main>
   );

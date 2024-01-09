@@ -19,11 +19,13 @@ class PostsController extends Controller
             'bookmark' => 'boolean',
             'sort_by' => 'string|in:votes_score,comments_count,published_at',
             'sort_time' => 'string|in:week,month,year,all',
+            'followed' => 'boolean',
         ]);
         $perPage = $fields['per_page'] ?? 10;
         $bookmark = $fields['bookmark'] ?? false;
         $sortBy = $fields['sort_by'] ?? 'published_at';
         $sortTime = $fields['sort_time'] ?? 'all';
+        $followed = $fields['followed'] ?? false;
 
         $posts = Post::with('publisher')
             ->withCount(['comments as comments_count'])
@@ -58,6 +60,15 @@ class PostsController extends Controller
             $posts->orderBy('published_at', 'desc');
         }
 
+        // Get only followed publishers
+        if ($followed) {
+            $posts->whereIn('publisher_id', function (Builder $query) use ($user) {
+                $query->select('publisher_id')
+                    ->from('follows')
+                    ->where('user_id', $user->id);
+            });
+        }
+
         $posts = $posts->paginate($perPage);
 
         return response()->json($posts, 200);
@@ -74,6 +85,7 @@ class PostsController extends Controller
         if ($user) {
             $post->user_vote = $post->votes()->where('user_id', $user->id)->first()->value ?? null;
             $post->user_bookmarked = $post->bookmarkedUsers()->where('user_id', $user->id)->exists();
+            $post->publisher->user_followed = $post->publisher->followingUsers()->where('user_id', $user->id)->exists();
         }
 
         return response()->json($post, 200);

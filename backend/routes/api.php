@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PostsController;
+use App\Http\Controllers\PublishersController;
 
 Route::get('/health_check', function () {
     return response()->json(['message' => 'ok'], 200);
@@ -27,4 +28,10 @@ Route::prefix('posts')->group(function() {
     Route::get('/', [PostsController::class, 'index']);
     Route::get('/{post}', [PostsController::class, 'show']);
     Route::get('/{post}/comments', [PostsController::class, 'getPostComments']);
+});
+
+Route::prefix('publishers')->group(function() {
+   Route::middleware('auth:sanctum')->group(function() {
+      Route::post('/{publisher}/follows', [PublishersController::class, 'follow']);
+   });
 });
