@@ -35,10 +35,15 @@ const handler = NextAuth({
       session.token = (token.user as any).token;
       return session;
     },
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger, session }) {
       if (user) {
         token.user = user;
       }
+
+      if (trigger === "update") {
+        token.user = session;
+      }
+
       return token;
     },
   },

@@ -1,7 +1,7 @@
 "use client";
 
 import { Comment, Paginated, Post } from "@/lib/types";
-import { trimString } from "@/lib/utils";
+import { avatarLink, trimString } from "@/lib/utils";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -72,7 +72,7 @@ export default function PostComments({ post, comments, setComments }: Props) {
           <div className="flex gap-3 px-3 py-3 items-center">
             <div className="avatar">
               <div className="w-10 rounded-xl">
-                <img src={comment.user.avatar || "/images/default-avatar.jpg"} />
+                <img src={avatarLink(comment.user.avatar)} />
               </div>
             </div>
             <div className="flex flex-col gap-[2px]">

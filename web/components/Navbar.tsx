@@ -4,6 +4,9 @@ import Link from "next/link";
 
 import { signOut, useSession } from "next-auth/react";
 import { useEffect } from "react";
+import { avatarLink, trimString } from "@/lib/utils";
+import { CgProfile } from "react-icons/cg";
+import { MdLogout } from "react-icons/md";
 
 const NavBar = () => {
   const session = useSession();
@@ -35,11 +38,12 @@ const NavBar = () => {
         </Link>
       </div>
       {session.status === "authenticated" ? (
-        <div className="flex-none gap-2">
+        <div className="flex-none gap-2 flex items-center">
+          <p className="">{trimString(user?.full_name || "", 30)}</p>
           <div className="dropdown dropdown-end">
             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar mr-4">
               <div className="w-8 rounded-full">
-                <img alt={`Profile Picture of ${user?.full_name}`} src={user?.avatar || "/images/default-avatar.jpg"} />
+                <img alt={`Profile Picture of ${user?.full_name}`} src={avatarLink(user?.avatar)} />
               </div>
             </div>
             <ul
@@ -47,13 +51,14 @@ const NavBar = () => {
               className="mt-4 z-[1] p-1 shadow menu menu-md dropdown-content bg-base-100 rounded-box w-60"
             >
               <li>
-                <a className="text-base">Profile</a>
-              </li>
-              <li>
-                <a className="text-base">Settings</a>
+                <Link className="text-base" href={"/profile"}>
+                  <CgProfile className="text-xl" />
+                  Profile
+                </Link>
               </li>
               <li>
                 <a className="text-base" onClick={handleLogout}>
+                  <MdLogout className="text-xl" />
                   Logout
                 </a>
               </li>

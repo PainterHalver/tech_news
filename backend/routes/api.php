@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\PublishersController;
+use App\Http\Controllers\UsersController;
 
 Route::get('/health_check', function () {
     return response()->json(['message' => 'ok'], 200);
@@ -34,4 +35,11 @@ Route::prefix('publishers')->group(function() {
    Route::middleware('auth:sanctum')->group(function() {
       Route::post('/{publisher}/follows', [PublishersController::class, 'follow']);
    });
+});
+
+Route::prefix('me')->group(function() {
+    Route::middleware('auth:sanctum')->group(function() {
+        Route::patch('/', [UsersController::class, 'updateMe']);
+        Route::post('/avatar', [UsersController::class, 'updateAvatar']);
+    });
 });

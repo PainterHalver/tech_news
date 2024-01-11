@@ -1,7 +1,7 @@
 "use client";
 
 import { Comment, Post } from "@/lib/types";
-import { trimString } from "@/lib/utils";
+import { avatarLink, trimString } from "@/lib/utils";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useState } from "react";
@@ -42,7 +42,7 @@ export default function PostCommentBox({ post, setComments }: Props) {
       <div className="flex gap-3 px-3 py-3 items-center">
         <div className="avatar">
           <div className="w-10 rounded-xl">
-            <img src={user?.avatar || "/images/default-avatar.jpg"} />
+            <img src={avatarLink(user?.avatar)} />
           </div>
         </div>
         <p className="text-lg">Share your thoughts</p>
