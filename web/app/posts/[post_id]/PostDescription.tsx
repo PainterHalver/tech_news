@@ -22,9 +22,11 @@ export default function PostDescription({ post }: Props) {
       <p className="text-text-primary font-[300] whitespace-pre-line">
         {shouldShowFullDescription ? post.description : trimString(post.description, PREVIEW_LENGTH)}
         &nbsp;&nbsp;
-        <span className="link link-hover text-text-secondary" onClick={toggleDescription}>
-          {shouldShowFullDescription ? "Show less" : "Show more"}
-        </span>
+        {post.description.length > PREVIEW_LENGTH && (
+          <span className="link link-hover text-text-secondary" onClick={toggleDescription}>
+            {shouldShowFullDescription ? "Show less" : "Show more"}
+          </span>
+        )}
       </p>
     </div>
   );
