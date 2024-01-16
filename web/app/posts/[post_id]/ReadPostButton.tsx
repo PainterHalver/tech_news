@@ -2,6 +2,7 @@
 
 import axios from "@/lib/axios";
 import { Post } from "@/lib/types";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import toast from "react-hot-toast";
 import { TbShare3 } from "react-icons/tb";
@@ -11,7 +12,12 @@ type Props = {
 };
 
 export default function ReadPostButton({ post }: Props) {
+  const session = useSession();
+  const authenticated = session?.status === "authenticated";
+
   const handleUpsertView = async (e: any) => {
+    if (!authenticated) return;
+
     try {
       const response = await axios.post(`/api/posts/${post.id}/views`);
       if (response.status !== 200) {
