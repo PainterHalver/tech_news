@@ -20,12 +20,14 @@ class PostsController extends Controller
             'sort_by' => 'string|in:votes_score,comments_count,published_at',
             'sort_time' => 'string|in:week,month,year,all',
             'followed' => 'boolean',
+            'search' => 'string',
         ]);
         $perPage = $fields['per_page'] ?? 10;
         $bookmark = $fields['bookmark'] ?? false;
         $sortBy = $fields['sort_by'] ?? 'published_at';
         $sortTime = $fields['sort_time'] ?? 'all';
         $followed = $fields['followed'] ?? false;
+        $search = $fields['search'] ?? '';
 
         $posts = Post::with('publisher')
             ->withCount(['comments as comments_count'])
@@ -50,6 +52,12 @@ class PostsController extends Controller
                     $query->where('user_id', $user->id);
                 });
             }
+        }
+
+        // SEARCH BY TITLE
+        $words = explode(' ', $search);
+        foreach ($words as $word) {
+            $posts->where('title', 'like', '%'.$word.'%');
         }
 
         // SORT
