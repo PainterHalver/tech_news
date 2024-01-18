@@ -1,7 +1,7 @@
 "use client";
 
 import axios from "@/lib/axios";
-import { Comment, Post } from "@/lib/types";
+import { Comment, Post, Stats } from "@/lib/types";
 import { avatarLink, handleShare, showModal } from "@/lib/utils";
 import moment from "moment";
 import { useSession } from "next-auth/react";
@@ -15,6 +15,7 @@ import toast from "react-hot-toast";
 export default function ProfilePage() {
   const session = useSession();
   const user = session?.data?.user;
+  const [stats, setStats] = useState<Stats | null>(null);
 
   const [uploading, setUploading] = useState(false);
 
@@ -40,6 +41,20 @@ export default function ProfilePage() {
       setUploading(false);
     }
   };
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const res = await axios.get("/api/me/statistics");
+        const stats = res.data.data;
+        setStats(stats);
+      } catch (error) {
+        console.log("FETCH STATS ERROR: ", error);
+      }
+    };
+
+    fetchStats();
+  }, []);
 
   if (!user) return "Loading....";
 
@@ -81,6 +96,39 @@ export default function ProfilePage() {
         <div className="px-5 pb-3 border-b border-border">
           <p className="text-text-primary text-xl">{user.full_name}</p>
           <p className="text-text-secondary">@{user.username}</p>
+          <p className="text-text-secondary text-sm mt-1">Joined {moment(user.created_at).format("MMM DD YYYY")}</p>
+        </div>
+
+        <div className="stats rounded-none">
+          <div className="stat">
+            <div className="stat-title">Views</div>
+            <div className="stat-value">{stats?.views_count ?? "..."}</div>
+            {/* <div className="stat-desc">Jan 1st - Feb 1st</div> */}
+          </div>
+
+          <div className="stat">
+            <div className="stat-title">Comments</div>
+            <div className="stat-value">{stats?.comments_count ?? "..."}</div>
+            {/* <div className="stat-desc">↗︎ 400 (22%)</div> */}
+          </div>
+
+          <div className="stat">
+            <div className="stat-title">Votes</div>
+            <div className="stat-value">{stats?.votes_count ?? "..."}</div>
+            {/* <div className="stat-desc">↘︎ 90 (14%)</div> */}
+          </div>
+        </div>
+
+        <div className="stats rounded-none border-t border-border">
+          <div className="stat">
+            <div className="stat-title">Followed Publishers</div>
+            <div className="stat-value">{stats?.followed_publishers_count ?? "..."}</div>
+          </div>
+
+          <div className="stat">
+            <div className="stat-title">Bookmarks</div>
+            <div className="stat-value">{stats?.bookmarks_count ?? "..."}</div>
+          </div>
         </div>
       </main>
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -52,6 +53,30 @@ class UsersController extends Controller
             'data' => [
                 'token' => $request->bearerToken(),
                 'user' => $user,
+            ],
+        ], 200);
+    }
+
+    public function statistics(Request $request): JsonResponse
+    {
+        $user = auth()->user();
+        $views_count = $user->views()->count();
+        $votes_count = $user->votes()->count();
+        $comments_count = $user->comments()->count();
+        $joined_at = $user->created_at;
+        $followed_publishers_count = $user->followedPublishers()->count();
+        $bookmarks_count = $user->bookmarkedPosts()->count();
+
+        return response()->json([
+            'message' => 'ok',
+            'data' => [
+                'user' => $user,
+                'views_count' => $views_count,
+                'comments_count' => $comments_count,
+                'joined_at' => $joined_at,
+                'followed_publishers_count' => $followed_publishers_count,
+                'bookmarks_count' => $bookmarks_count,
+                'votes_count' => $votes_count,
             ],
         ], 200);
     }

@@ -69,3 +69,13 @@ export type Paginated<T> = {
   to: number;
   total: number;
 };
+
+export type Stats = {
+  views_count: number;
+  votes_count: number;
+  comments_count: number;
+  bookmarks_count: number;
+  joined_at: Date;
+  followed_publishers_count: number;
+  user: User;
+};

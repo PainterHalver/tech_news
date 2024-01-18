@@ -41,5 +41,6 @@ Route::prefix('me')->group(function() {
     Route::middleware('auth:sanctum')->group(function() {
         Route::patch('/', [UsersController::class, 'updateMe']);
         Route::post('/avatar', [UsersController::class, 'updateAvatar']);
+        Route::get('/statistics', [UsersController::class, 'statistics']);
     });
 });
