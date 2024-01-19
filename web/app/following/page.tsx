@@ -33,14 +33,14 @@ export default function Bookmarks() {
 
   return (
     <main className="flex flex-col py-5 lg:px-16 px-8 min-h-full">
-      <h1 className="text-xl font-bold">Following</h1>
+      <h1 className="text-xl font-bold">Tin tức đang theo dõi</h1>
       <div className="flex flex-wrap justify-center flex-1 gap-8 mt-8">
         {posts.length > 0 ? (
           posts.map((post, index) => (
             <PostCard post={post} key={post.id} isLast={index === posts.length - 1} addPage={() => setPage(page + 1)} />
           ))
         ) : (
-          <div className="text-xl">No Posts</div>
+          <div className="text-xl">Không tìm thấy tin tức nào</div>
         )}
         {/* add per_page skeleton*/}
         {fetching && Array.from({ length: PER_PAGE }).map((_, index) => <PostCardSkeleton key={index + 100000} />)}

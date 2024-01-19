@@ -55,16 +55,16 @@ export const RegisterModal = () => {
   return (
     <dialog id="register_modal" className="modal">
       <div className="modal-box flex flex-col no-scrollbar">
-        <h3 className="font-bold text-xl text-center text-text-primary">Register</h3>
+        <h3 className="font-bold text-xl text-center text-text-primary">Đăng ký</h3>
         <form className="form-control w-full" onSubmit={handleRegister}>
           <label className="form-control w-full">
             <div className="label">
-              <span className="label-text text-base">Username</span>
+              <span className="label-text text-base">Tên đăng nhập</span>
             </div>
             <input
               type="text"
               name="username"
-              placeholder="Type here"
+              placeholder="tên đăng nhập"
               className={`input input-bordered w-full ${registerErrors.username ? "input-error" : ""}`}
               value={username}
               onChange={(e) => setUsername(e.target.value)}
@@ -77,12 +77,12 @@ export const RegisterModal = () => {
           </label>
           <label className="form-control w-full">
             <div className="label">
-              <span className="label-text text-base">Full Name</span>
+              <span className="label-text text-base">Tên đầy đủ</span>
             </div>
             <input
               type="text"
               name="full_name"
-              placeholder="Type here"
+              placeholder="tên đầy đủ"
               className={`input input-bordered w-full ${registerErrors.full_name ? "input-error" : ""}`}
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
@@ -95,12 +95,12 @@ export const RegisterModal = () => {
           </label>
           <label className="form-control w-full">
             <div className="label">
-              <span className="label-text text-base">Password</span>
+              <span className="label-text text-base">Mật khẩu</span>
             </div>
             <input
               type="password"
               name="password"
-              placeholder="Type here"
+              placeholder="mật khẩu"
               className={`input input-bordered w-full ${registerErrors.password ? "input-error" : ""}`}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -113,12 +113,12 @@ export const RegisterModal = () => {
           </label>
           <label className="form-control w-full">
             <div className="label">
-              <span className="label-text text-base">Password Confirm</span>
+              <span className="label-text text-base">Nhập lại mật khẩu</span>
             </div>
             <input
               type="password"
               name="password_confirm"
-              placeholder="Type here"
+              placeholder="nhập lại mật khẩu"
               className={`input input-bordered w-full ${registerErrors.password_confirm ? "input-error" : ""}`}
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
@@ -130,7 +130,7 @@ export const RegisterModal = () => {
             )}
           </label>
           <p className="pt-2">
-            Already registered? &nbsp;
+            Đã có tài khoản? &nbsp;
             <a
               className="link hover:opacity-100 opacity-90"
               onClick={() => {
@@ -138,16 +138,16 @@ export const RegisterModal = () => {
                 showModal("login_modal");
               }}
             >
-              Login here
+              Đăng nhập
             </a>
           </p>
           <button type="submit" className="btn btn-outline mt-3" disabled={loading} onClick={handleRegister}>
-            {loading ? <span className="loading loading-spinner"></span> : "Submit"}
+            {loading ? <span className="loading loading-spinner"></span> : "Xác nhận"}
           </button>
         </form>
       </div>
       <form method="dialog" className="modal-backdrop focus:border-none bg-backdrop">
-        <button className="cursor-default">close</button>
+        <button className="cursor-default">đóng</button>
       </form>
     </dialog>
   );

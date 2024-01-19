@@ -10,7 +10,7 @@ export default function LoginButton() {
           (modal as any).showModal();
         }}
       >
-        Login
+        Đăng nhập
       </button>
     </div>
   );

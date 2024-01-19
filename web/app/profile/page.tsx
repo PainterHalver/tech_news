@@ -1,16 +1,14 @@
 "use client";
 
 import axios from "@/lib/axios";
-import { Comment, Post, Stats } from "@/lib/types";
-import { avatarLink, handleShare, showModal } from "@/lib/utils";
+import { Stats } from "@/lib/types";
+import { avatarLink, showModal } from "@/lib/utils";
 import moment from "moment";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
-import { BiCommentDetail, BiShareAlt } from "react-icons/bi";
-import { EditProfileModal } from "./EditProfileModal";
 import toast from "react-hot-toast";
+import { EditProfileModal } from "./EditProfileModal";
 
 export default function ProfilePage() {
   const session = useSession();
@@ -33,10 +31,10 @@ export default function ProfilePage() {
       });
       const userData = res.data.data;
       await session.update(userData);
-      toast.success("Avatar updated successfully.");
+      toast.success("Cập nhật ảnh đại diện thành công.");
     } catch (error) {
       console.log("HANDLE AVATAR UPDATE ERROR: ", error);
-      toast.error("Unable to update avatar. Please try again.");
+      toast.error("Có lỗi xảy ra. Vui lòng thử lại.");
     } finally {
       setUploading(false);
     }
@@ -56,7 +54,7 @@ export default function ProfilePage() {
     fetchStats();
   }, []);
 
-  if (!user) return "Loading....";
+  if (!user) return "Đang tải....";
 
   return (
     <main className="flex min-h-full justify-center flex-col md:flex-row">
@@ -96,24 +94,24 @@ export default function ProfilePage() {
         <div className="px-5 pb-3 border-b border-border">
           <p className="text-text-primary text-xl">{user.full_name}</p>
           <p className="text-text-secondary">@{user.username}</p>
-          <p className="text-text-secondary text-sm mt-1">Joined {moment(user.created_at).format("MMM DD YYYY")}</p>
+          <p className="text-text-secondary text-sm mt-1">Tham gia {moment(user.created_at).format("MMM DD YYYY")}</p>
         </div>
 
         <div className="stats rounded-none">
           <div className="stat">
-            <div className="stat-title">Views</div>
+            <div className="stat-title">Lượt đọc tin</div>
             <div className="stat-value">{stats?.views_count ?? "..."}</div>
             {/* <div className="stat-desc">Jan 1st - Feb 1st</div> */}
           </div>
 
           <div className="stat">
-            <div className="stat-title">Comments</div>
+            <div className="stat-title">Bình luận</div>
             <div className="stat-value">{stats?.comments_count ?? "..."}</div>
             {/* <div className="stat-desc">↗︎ 400 (22%)</div> */}
           </div>
 
           <div className="stat">
-            <div className="stat-title">Votes</div>
+            <div className="stat-title">Số lượng Vote</div>
             <div className="stat-value">{stats?.votes_count ?? "..."}</div>
             {/* <div className="stat-desc">↘︎ 90 (14%)</div> */}
           </div>
@@ -121,12 +119,12 @@ export default function ProfilePage() {
 
         <div className="stats rounded-none border-t border-border">
           <div className="stat">
-            <div className="stat-title">Followed Publishers</div>
+            <div className="stat-title">Nguồn tin đang theo dõi</div>
             <div className="stat-value">{stats?.followed_publishers_count ?? "..."}</div>
           </div>
 
           <div className="stat">
-            <div className="stat-title">Bookmarks</div>
+            <div className="stat-title">Số lượng bookmark</div>
             <div className="stat-value">{stats?.bookmarks_count ?? "..."}</div>
           </div>
         </div>

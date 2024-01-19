@@ -12,6 +12,9 @@ import UpvoteButton from "../UpvoteButton";
 import axios from "@/lib/axios";
 import { useSession } from "next-auth/react";
 
+import "moment/locale/vi";
+moment.locale("vi");
+
 type Props = {
   post: Post;
   isLast: boolean;

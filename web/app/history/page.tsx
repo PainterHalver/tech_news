@@ -1,11 +1,9 @@
 "use client";
 
-import { PostCard } from "@/components/PostCard/PostCard";
-import { PostCardSkeleton } from "@/components/PostCard/PostCardSkeleton";
 import { PostModal } from "@/components/PostModal";
-import { Paginated, Post } from "@/lib/types";
-import { useEffect, useState } from "react";
 import axios from "@/lib/axios";
+import { Post } from "@/lib/types";
+import { useEffect, useState } from "react";
 import HistoryPostCard from "./HistoryPostCard";
 import HistoryPostCardSkeleton from "./HistoryPostCardSkeleton";
 
@@ -32,7 +30,7 @@ export default function Home() {
 
   return (
     <main className="flex flex-col py-5 lg:px-16 px-8 min-h-full">
-      <h1 className="text-xl font-bold">History</h1>
+      <h1 className="text-xl font-bold">Lịch sử đọc tin</h1>
       <div className="flex flex-col flex-1 gap-5 mt-8 items-center">
         {posts.map((post, index) => (
           <HistoryPostCard post={post} key={post.id} />

@@ -33,7 +33,7 @@ export default function Home() {
 
   return (
     <main className="flex flex-col py-5 lg:px-16 px-8 min-h-full">
-      <h1 className="text-xl font-bold">Newly Updated</h1>
+      <h1 className="text-xl font-bold">Mới cập nhật</h1>
       <div className="flex flex-wrap justify-center flex-1 gap-8 mt-8">
         {posts.map((post, index) => (
           <PostCard post={post} key={post.id} isLast={index === posts.length - 1} addPage={() => setPage(page + 1)} />

@@ -35,7 +35,7 @@ export default function BookmarkBox({ post }: Props) {
       onClick={toogleBookmark}
     >
       {bookmarked ? <BsBookmarkCheckFill className="text-xl" /> : <BsBookmark className="text-xl" />}
-      <span className="text-base font-bold">{bookmarked ? "Bookmarked" : "Bookmark"}</span>
+      <span className="text-base font-bold">{bookmarked ? "Đã Bookmark" : "Bookmark"}</span>
     </div>
   );
 }

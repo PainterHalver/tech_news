@@ -17,6 +17,8 @@ import PostSkeleton from "./PostSkeleton";
 import PostVotes from "./PostVotes";
 import PublisherCard from "./PublisherCard";
 import ReadPostButton from "./ReadPostButton";
+import "moment/locale/vi";
+moment.locale("vi");
 
 type Props = {
   params: { post_id: string };
@@ -81,14 +83,14 @@ export default function PostPage({ params }: Props) {
             onClick={toggleCommentBox}
           >
             <BiCommentDetail className="text-3xl" />
-            <p className="font-bold text-lg">Comment</p>
+            <p className="font-bold text-lg">Bình luận</p>
           </div>
           <button
             className="flex items-center gap-2 group hover:cursor-pointer hover:text-[cyan] btn btn-ghost btn-md"
             onClick={() => handleShare(post.id)}
           >
             <BiShareAlt className="text-3xl" />
-            <p className="font-bold text-lg">Share</p>
+            <p className="font-bold text-lg">Chia sẻ</p>
           </button>
         </div>
 

@@ -29,7 +29,7 @@ export default function PostCommentBox({ post, setComments }: Props) {
       const commentData = res.data;
       setComments((prev) => [commentData, ...prev]);
       setComment("");
-      toast.success("Comment posted successfully");
+      toast.success("Đăng bình luận thành công");
     } catch (error) {
       console.log("POST COMMENT ERROR: ", error);
     } finally {
@@ -45,7 +45,7 @@ export default function PostCommentBox({ post, setComments }: Props) {
             <img src={avatarLink(user?.avatar)} />
           </div>
         </div>
-        <p className="text-lg">Share your thoughts</p>
+        <p className="text-lg">Chia sẻ suy nghĩ</p>
       </div>
       <textarea
         name="comment"

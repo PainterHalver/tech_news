@@ -21,9 +21,9 @@ export const closeModal = (id: string) => {
 export const handleShare = async (postId: string | number) => {
   try {
     await navigator.clipboard.writeText(`${process.env.NEXT_PUBLIC_URL}/posts/${postId}`);
-    toast.success("Post URL copied to clipboard");
+    toast.success("Đã lưu URL vào clipboard");
   } catch (error) {
-    toast.error("Failed to copy URL");
+    toast.error("Có lỗi khi lưu URL vào clipboard");
   }
 };
 

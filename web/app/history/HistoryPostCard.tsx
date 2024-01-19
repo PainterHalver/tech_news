@@ -3,6 +3,8 @@ import { Post, Publisher } from "@/lib/types";
 import Image from "next/image";
 import moment from "moment";
 import Link from "next/link";
+import "moment/locale/vi";
+moment.locale("vi");
 
 interface Props {
   post: Post;
@@ -30,7 +32,7 @@ const HistoryPostCard: React.FC<HistoryPostCardProps> = ({ post }) => {
         />
         <div>
           <h2 className="text-text-primary">{post.title}</h2>
-          <p className="text-sm">Viewed {moment(post.pivot?.updated_at).fromNow()}</p>
+          <p className="text-sm">Xem {moment(post.pivot?.updated_at).fromNow()}</p>
         </div>
       </div>
     </Link>

@@ -1,11 +1,8 @@
 "use client";
 
-import { PostCard } from "@/components/PostCard/PostCard";
-import { PostCardSkeleton } from "@/components/PostCard/PostCardSkeleton";
-import { PostModal } from "@/components/PostModal";
-import { Paginated, Post, User } from "@/lib/types";
-import { useEffect, useState } from "react";
 import axios from "@/lib/axios";
+import { Paginated, User } from "@/lib/types";
+import { useEffect, useState } from "react";
 
 const PER_PAGE = 10;
 

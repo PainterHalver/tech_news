@@ -7,6 +7,8 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import axios from "@/lib/axios";
 import moment from "moment";
+import "moment/locale/vi";
+moment.locale("vi");
 
 type Props = {
   post: Post;
@@ -61,7 +63,7 @@ export default function PostComments({ post, comments, setComments }: Props) {
   if (comments.length === 0)
     return (
       <div className="flex flex-col gap-5">
-        <p className="text-text-primary">No comments yet</p>
+        <p className="text-text-primary">Chưa có bình luận</p>
       </div>
     );
 

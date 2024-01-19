@@ -13,7 +13,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Tech News",
-  description: "All the latest tech news in one convenient place.",
+  description: "Tổng hợp tin tức công nghệ mới nhất từ các trang tin tức uy tín",
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {

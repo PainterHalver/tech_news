@@ -42,20 +42,20 @@ export default function MostLoved() {
 
   return (
     <main className="flex flex-col py-5 lg:px-16 px-8 min-h-full">
-      <h1 className="text-xl font-bold mb-3">Most loved</h1>
+      <h1 className="text-xl font-bold mb-3">Tin tức được yêu thích</h1>
       <div role="tablist" className="tabs tabs-boxed w-fit">
         <a role="tab" className={`tab ${sortTime === "week" ? "tab-active" : ""}`} onClick={() => setSortTime("week")}>
-          Last week
+          Theo tuần
         </a>
         <a
           role="tab"
           className={`tab ${sortTime === "month" ? "tab-active" : ""}`}
           onClick={() => setSortTime("month")}
         >
-          Last month
+          Theo tháng
         </a>
         <a role="tab" className={`tab ${sortTime === "year" ? "tab-active" : ""}`} onClick={() => setSortTime("year")}>
-          Last year
+          Theo năm
         </a>
       </div>
       <div className="flex flex-wrap justify-center flex-1 gap-8 mt-8">
@@ -64,7 +64,7 @@ export default function MostLoved() {
             <PostCard post={post} key={post.id} isLast={index === posts.length - 1} addPage={() => setPage(page + 1)} />
           ))
         ) : (
-          <div className="text-xl">No posts found</div>
+          <div className="text-xl">Không tìm thấy tin tức</div>
         )}
         {/* add per_page skeleton*/}
         {fetching && Array.from({ length: PER_PAGE }).map((_, index) => <PostCardSkeleton key={index + 100000} />)}

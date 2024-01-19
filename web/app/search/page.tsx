@@ -45,17 +45,17 @@ export default function SearchPage() {
 
   return (
     <main className="flex flex-col py-5 lg:px-16 px-8 min-h-full gap-3">
-      <h1 className="text-xl font-bold">Search</h1>
+      <h1 className="text-xl font-bold">Tìm kiếm</h1>
       <form className="w-full flex gap-4" onSubmit={handleSubmit}>
         <input
           type="text"
-          placeholder="Enter search query"
+          placeholder="Nhập từ khóa tìm kiếm"
           className="input input-bordered input-md w-full max-w-md"
           value={inputString}
           onChange={(e) => setInputString(e.target.value)}
         />
         <button type="submit" className="btn btn-primary" onClick={handleSubmit}>
-          Search
+          Tìm kiếm
         </button>
       </form>
       <div className="flex flex-wrap justify-center flex-1 gap-8 mt-8">
@@ -64,7 +64,7 @@ export default function SearchPage() {
             <PostCard post={post} key={post.id} isLast={index === posts.length - 1} addPage={() => setPage(page + 1)} />
           ))
         ) : (
-          <div className="text-xl">No Posts found</div>
+          <div className="text-xl">Không tìm thấy tin tức</div>
         )}
         {/* add per_page skeleton*/}
         {fetching && Array.from({ length: PER_PAGE }).map((_, index) => <PostCardSkeleton key={index + 100000} />)}

@@ -27,11 +27,11 @@ export default function PublisherCard({ publisher }: Props) {
       if (response.status !== 200) {
         throw new Error("Request failed");
       }
-      toast.success(`${followed ? "Unfollowed" : "Followed"} ${publisher.name}`);
+      toast.success(`${followed ? "Đã hủy theo dõi" : "Đã theo dõi"} ${publisher.name}`);
     } catch (error) {
       console.log("HANDLE TOGGLE FOLLOW ERROR: ", error);
       setFollowed(oldFollowed);
-      toast.error("Cannot follow/unfollow publisher");
+      toast.error("Có lỗi khi theo dõi nguồn tin");
     }
   };
 
@@ -58,7 +58,7 @@ export default function PublisherCard({ publisher }: Props) {
           </div>
           <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
             <li>
-              <a onClick={handleToggleFollow}>{followed ? "Unfollow" : "Follow"}</a>
+              <a onClick={handleToggleFollow}>{followed ? "Hủy theo dõi" : "Theo dõi"}</a>
             </li>
           </ul>
         </div>

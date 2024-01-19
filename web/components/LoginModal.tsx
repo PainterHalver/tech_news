@@ -25,7 +25,7 @@ export const LoginModal = () => {
       }
     } catch (error) {
       console.log(error);
-      toast.error("Unable to login. Please try again.");
+      toast.error("Có lỗi xảy ra. Vui lòng thử lại.");
     } finally {
       setLoading(false);
     }
@@ -34,15 +34,15 @@ export const LoginModal = () => {
   return (
     <dialog id="login_modal" className="modal">
       <div className="modal-box flex flex-col no-scrollbar">
-        <h3 className="font-bold text-xl text-center text-text-primary">Login</h3>
+        <h3 className="font-bold text-xl text-center text-text-primary">Đăng nhập</h3>
         <form className="form-control w-full" onSubmit={handleLogin}>
           <label className="form-control w-full">
             <div className="label">
-              <span className="label-text text-base">Username</span>
+              <span className="label-text text-base">Tên đăng nhập</span>
             </div>
             <input
               type="text"
-              placeholder="Type here"
+              placeholder="tên đăng nhập"
               className={`input input-bordered w-full ${loginError ? "input-error" : ""}`}
               value={username}
               onChange={(e) => setUsername(e.target.value)}
@@ -50,19 +50,19 @@ export const LoginModal = () => {
           </label>
           <label className="form-control w-full">
             <div className="label">
-              <span className="label-text text-base">Password</span>
+              <span className="label-text text-base">Mật khẩu</span>
             </div>
             <input
               type="password"
-              placeholder="Type here"
+              placeholder="mật khẩu"
               className={`input input-bordered w-full ${loginError ? "input-error" : ""}`}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
           </label>
-          <p className={`${loginError ? "text-downvoted" : "hidden"} pt-2`}>Invalid credentials</p>
+          <p className={`${loginError ? "text-downvoted" : "hidden"} pt-2`}>Tài khoản không đúng</p>
           <p className="pt-2">
-            New user? &nbsp;
+            Người dùng mới? &nbsp;
             <a
               className="link hover:opacity-100 opacity-90"
               onClick={() => {
@@ -70,16 +70,16 @@ export const LoginModal = () => {
                 showModal("register_modal");
               }}
             >
-              Register here
+              Đăng ký ngay
             </a>
           </p>
           <button type="submit" className="btn btn-outline mt-3" disabled={loading} onClick={handleLogin}>
-            {loading ? <span className="loading loading-spinner"></span> : "Submit"}
+            {loading ? <span className="loading loading-spinner"></span> : "Xác nhận"}
           </button>
         </form>
       </div>
       <form method="dialog" className="modal-backdrop focus:border-none bg-backdrop">
-        <button className="cursor-default">close</button>
+        <button className="cursor-default">đóng</button>
       </form>
     </dialog>
   );

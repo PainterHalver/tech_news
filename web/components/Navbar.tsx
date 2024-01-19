@@ -53,13 +53,13 @@ const NavBar = () => {
               <li>
                 <Link className="text-base" href={"/profile"}>
                   <CgProfile className="text-xl" />
-                  Profile
+                  Hồ sơ
                 </Link>
               </li>
               <li>
                 <a className="text-base" onClick={handleLogout}>
                   <MdLogout className="text-xl" />
-                  Logout
+                  Đăng xuất
                 </a>
               </li>
             </ul>
@@ -74,7 +74,7 @@ const NavBar = () => {
               (modal as any).showModal();
             }}
           >
-            Login
+            Đăng nhập
           </button>
         </div>
       )}

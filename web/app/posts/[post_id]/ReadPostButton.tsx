@@ -25,7 +25,7 @@ export default function ReadPostButton({ post }: Props) {
       }
     } catch (error) {
       console.log("HANDLE UPSERT VIEW ERROR: ", error);
-      toast.error("Something went wrong");
+      toast.error("Có lỗi xảy ra");
     }
   };
 
@@ -36,7 +36,7 @@ export default function ReadPostButton({ post }: Props) {
       className="btn btn-outline font-bold text-base text-text-primary"
       onClick={handleUpsertView}
     >
-      <TbShare3 className="text-xl" /> Read post
+      <TbShare3 className="text-xl" /> Đọc tin
     </Link>
   );
 }

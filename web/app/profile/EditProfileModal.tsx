@@ -39,7 +39,7 @@ export const EditProfileModal = () => {
 
       const modal = document.getElementById("edit_profile_modal");
       (modal as any).close();
-      toast.success("Profile updated successfully.");
+      toast.success("Cập nhật thông tin thành công.");
     } catch (error: unknown | AxiosError) {
       if (Axios.isAxiosError(error)) {
         const errors = error.response?.data.errors;
@@ -48,7 +48,7 @@ export const EditProfileModal = () => {
         }
       }
       console.log("HANDLE EDIT PROFILE ERROR:", error);
-      toast.error("Unable to update profile. Please try again.");
+      toast.error("Có lỗi xảy ra. Vui lòng thử lại.");
     } finally {
       setLoading(false);
     }
@@ -57,11 +57,11 @@ export const EditProfileModal = () => {
   return (
     <dialog id="edit_profile_modal" className="modal">
       <div className="modal-box flex flex-col no-scrollbar">
-        <h3 className="font-bold text-xl text-center text-text-primary">Edit Profile</h3>
+        <h3 className="font-bold text-xl text-center text-text-primary">Chỉnh sửa hồ sơ</h3>
         <form className="form-control w-full" onSubmit={handleEdit}>
           <label className="form-control w-full">
             <div className="label">
-              <span className="label-text text-base">Full Name</span>
+              <span className="label-text text-base">Tên đầy đủ</span>
             </div>
             <input
               type="text"
@@ -78,7 +78,7 @@ export const EditProfileModal = () => {
           </label>
           <label className="form-control w-full">
             <div className="label">
-              <span className="label-text text-base">Password</span>
+              <span className="label-text text-base">Mật khẩu</span>
             </div>
             <input
               type="password"
@@ -95,7 +95,7 @@ export const EditProfileModal = () => {
           </label>
           <label className="form-control w-full">
             <div className="label">
-              <span className="label-text text-base">New password</span>
+              <span className="label-text text-base">Mật khẩu mới</span>
             </div>
             <input
               type="password"
@@ -112,7 +112,7 @@ export const EditProfileModal = () => {
           </label>
           <label className="form-control w-full">
             <div className="label">
-              <span className="label-text text-base">Password Confirm</span>
+              <span className="label-text text-base">Nhập lại mật khẩu</span>
             </div>
             <input
               type="password"
@@ -128,12 +128,12 @@ export const EditProfileModal = () => {
             )}
           </label>
           <button type="submit" className="btn btn-outline mt-5" disabled={loading} onClick={handleEdit}>
-            {loading ? <span className="loading loading-spinner"></span> : "Submit"}
+            {loading ? <span className="loading loading-spinner"></span> : "Xác nhận"}
           </button>
         </form>
       </div>
       <form method="dialog" className="modal-backdrop focus:border-none bg-backdrop">
-        <button className="cursor-default">close</button>
+        <button className="cursor-default">đóng</button>
       </form>
     </dialog>
   );
