@@ -23,7 +23,7 @@ Route::prefix('posts')->group(function() {
         Route::post('/{post}/votes', [PostsController::class, 'vote']);
         Route::post('/{post}/comments', [PostsController::class, 'comment']);
         Route::post('/{post}/bookmarks', [PostsController::class, 'toggleBookmark']);
-        Route::post('{post}/views', [PostsController::class, 'view']);
+        Route::post('/{post}/views', [PostsController::class, 'view']);
     });
 
     Route::get('/', [PostsController::class, 'index']);
@@ -43,4 +43,8 @@ Route::prefix('me')->group(function() {
         Route::post('/avatar', [UsersController::class, 'updateAvatar']);
         Route::get('/statistics', [UsersController::class, 'statistics']);
     });
+});
+
+Route::middleware('auth:sanctum')->middleware('role:admin')->group(function() {
+    Route::get('/users', [UsersController::class, 'index']);
 });

@@ -20,7 +20,7 @@ class PostsController extends Controller
             'sort_by' => 'string|in:votes_score,comments_count,published_at',
             'sort_time' => 'string|in:week,month,year,all',
             'followed' => 'boolean',
-            'search' => 'string',
+            'search' => '',
         ]);
         $perPage = $fields['per_page'] ?? 10;
         $bookmark = $fields['bookmark'] ?? false;

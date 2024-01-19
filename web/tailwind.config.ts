@@ -16,6 +16,7 @@ const config: Config = {
     colors: {
       "bg-primary": "var(--bg-primary)",
       "bg-secondary": "var(--bg-secondary)",
+      "bg-table-header": "var(--bg-table-header)",
       border: "var(--border)",
       "border-hover": "var(--border-hover)",
       "text-primary": "var(--text-primary)",

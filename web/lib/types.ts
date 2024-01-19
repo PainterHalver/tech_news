@@ -3,7 +3,7 @@ export type User = {
   username: string;
   full_name: string;
   avatar: string;
-  role: string;
+  role: "user" | "admin";
   created_at: Date;
   updated_at: Date;
 };

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -79,5 +80,27 @@ class UsersController extends Controller
                 'votes_count' => $votes_count,
             ],
         ], 200);
+    }
+
+    // ADMIN ROUTES
+    public function index(Request $request): JsonResponse
+    {
+        $fields = $request->validate([
+            'per_page' => 'integer',
+            'search' => '',
+        ]);
+
+        $perPage = $fields['per_page'] ?? 10;
+        $search = $fields['search'] ?? '';
+
+        $users = User::latest();
+        $words = explode(' ', $search);
+        foreach ($words as $word) {
+            $users = $users->where('username', 'like', '%'.$word.'%')
+                ->orWhere('full_name', 'like', '%'.$word.'%');
+        }
+        $users = $users->paginate($perPage);
+
+        return response()->json($users, 200);
     }
 }

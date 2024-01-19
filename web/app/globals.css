@@ -5,6 +5,7 @@
 :root {
   --bg-primary: #0e1217;
   --bg-secondary: #1c1f26;
+  --bg-table-header: #374151;
   --border: #383d47;
   --border-hover: #545b6a;
   --text-primary: #ffffff;
