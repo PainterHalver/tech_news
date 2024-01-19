@@ -88,7 +88,7 @@ export default function ProfilePage() {
               showModal("edit_profile_modal");
             }}
           >
-            Edit profile
+            Chỉnh sửa hồ sơ
           </button>
         </div>
         <div className="px-5 pb-3 border-b border-border">

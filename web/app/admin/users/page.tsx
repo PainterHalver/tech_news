@@ -3,6 +3,8 @@
 import axios from "@/lib/axios";
 import { Paginated, User } from "@/lib/types";
 import { useEffect, useState } from "react";
+import { EditUserModal } from "./EditUserModal";
+import { showModal } from "@/lib/utils";
 
 const PER_PAGE = 10;
 
@@ -15,6 +17,7 @@ export default function ManageUsersPage() {
   const tableUsers = users.slice(PER_PAGE * (page - 1), PER_PAGE * page);
   const totalPages = Math.ceil(users.length / PER_PAGE);
   const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
   const fetchUsers = async (search?: string) => {
     try {
@@ -86,10 +89,21 @@ export default function ManageUsersPage() {
                 </th>
                 <td className="px-6 py-3">{user.username}</td>
                 <td className="px-6 py-3">{user.full_name}</td>
-                <td className="px-6 py-3">{user.role}</td>
+                <td className="px-6 py-3">{user.role === "admin" ? "Quản trị viên" : "Người dùng"}</td>
                 <td className="px-6 py-3 flex gap-3">
-                  <button className="btn btn-primary btn-sm">Sửa</button>
-                  <button className="btn btn-error btn-sm">Xóa</button>
+                  <button
+                    className="btn btn-primary btn-sm"
+                    disabled={user.role === "admin"}
+                    onClick={() => {
+                      setSelectedUser(user);
+                      showModal("edit_user_modal");
+                    }}
+                  >
+                    Sửa
+                  </button>
+                  <button className="btn btn-error btn-sm" disabled={user.role === "admin"}>
+                    Xóa
+                  </button>
                 </td>
               </tr>
             ))}
@@ -107,6 +121,8 @@ export default function ManageUsersPage() {
           ))}
         </div>
       </div>
+
+      <EditUserModal selectedUser={selectedUser} users={users} setUsers={setUsers} />
     </main>
   );
 }

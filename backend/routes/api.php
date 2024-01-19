@@ -47,4 +47,5 @@ Route::prefix('me')->group(function() {
 
 Route::middleware('auth:sanctum')->middleware('role:admin')->group(function() {
     Route::get('/users', [UsersController::class, 'index']);
+    Route::patch('/users/{user}', [UsersController::class, 'update']);
 });
