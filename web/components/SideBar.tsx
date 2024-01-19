@@ -6,7 +6,7 @@ import { GoHistory } from "react-icons/go";
 import { HiOutlineHome, HiOutlineUsers, HiOutlineNewspaper } from "react-icons/hi2";
 import { IoCheckboxOutline, IoSearchOutline } from "react-icons/io5";
 import { PiChatCircleDots } from "react-icons/pi";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 
 export default async function SideBar() {
   const session = await getServerSession(authOptions);
