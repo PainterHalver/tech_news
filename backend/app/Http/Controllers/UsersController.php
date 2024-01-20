@@ -13,9 +13,9 @@ class UsersController extends Controller
     {
         $fields = $request->validate([
             'full_name' => 'required|string|min:3|max:50',
-            'password' => 'string|min:4',
-            'new_password' => 'required_with:password|string|min:4',
-            'password_confirm' => 'required_with:new_password|string|same:password',
+            'password' => 'string|min:4|nullable',
+            'new_password' => 'required_with:password|string|min:4|nullable',
+            'password_confirm' => 'required_with:new_password|string|same:password|nullable',
         ]);
         $fields['password'] = md5($fields['new_password']);
 

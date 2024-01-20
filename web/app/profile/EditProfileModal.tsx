@@ -29,9 +29,9 @@ export const EditProfileModal = () => {
       setEditErrors({});
       const res = await axios.patch("/api/me", {
         full_name: fullName,
-        password,
-        new_password: newPassword,
-        password_confirm: confirmPassword,
+        password: password === "" ? null : password,
+        new_password: newPassword === "" ? null : newPassword,
+        password_confirm: confirmPassword === "" ? null : confirmPassword,
       });
 
       // update the user session
