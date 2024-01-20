@@ -24,7 +24,7 @@ export default function PostDescription({ post }: Props) {
         &nbsp;&nbsp;
         {post.description.length > PREVIEW_LENGTH && (
           <span className="link link-hover text-text-secondary" onClick={toggleDescription}>
-            {shouldShowFullDescription ? "Xem thêm" : "Rút gọn"}
+            {shouldShowFullDescription ? "Rút gọn" : "Xem thêm"}
           </span>
         )}
       </p>

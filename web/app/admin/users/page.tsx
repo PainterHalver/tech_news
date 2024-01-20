@@ -22,7 +22,7 @@ export default function ManageUsersPage() {
   const fetchUsers = async (search?: string) => {
     try {
       setFetching(true);
-      const res = await axios.get(`/api/users?per_page=100000&page=${page}&search=${search ?? query}`);
+      const res = await axios.get(`/api/users?per_page=100000&page=1&search=${search ?? query}`);
       const users = res.data as Paginated<User>;
       setUsers((prev) => [...prev, ...users.data]);
     } catch (error) {
@@ -36,7 +36,7 @@ export default function ManageUsersPage() {
     e.preventDefault();
     setUsers([]);
     setQuery(inputString);
-    if (page === 1) return fetchUsers(inputString);
+    fetchUsers(inputString);
     setPage(1);
   };
 
@@ -101,9 +101,9 @@ export default function ManageUsersPage() {
                   >
                     Sửa
                   </button>
-                  <button className="btn btn-error btn-sm" disabled={user.role === "admin"}>
+                  {/* <button className="btn btn-error btn-sm" disabled={user.role === "admin"}>
                     Xóa
-                  </button>
+                  </button> */}
                 </td>
               </tr>
             ))}
