@@ -23,7 +23,7 @@ export const EditUserModal = ({ selectedUser, users, setUsers }: Props) => {
   const [loading, setLoading] = useState(false);
   const [editErrors, setEditErrors] = useState<EditUserErrors>({});
 
-  const handleRegister = async (e: any) => {
+  const handleEditUser = async (e: any) => {
     e.preventDefault();
     try {
       setLoading(true);
@@ -61,7 +61,7 @@ export const EditUserModal = ({ selectedUser, users, setUsers }: Props) => {
     <dialog id="edit_user_modal" className="modal">
       <div className="modal-box flex flex-col no-scrollbar">
         <h3 className="font-bold text-xl text-center text-text-primary">Chỉnh sửa người dùng</h3>
-        <form className="form-control w-full" onSubmit={handleRegister}>
+        <form className="form-control w-full" onSubmit={handleEditUser}>
           <label className="form-control w-full">
             <div className="label">
               <span className="label-text text-base">Tên đăng nhập</span>

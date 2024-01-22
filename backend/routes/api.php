@@ -24,6 +24,11 @@ Route::prefix('posts')->group(function() {
         Route::post('/{post}/comments', [PostsController::class, 'comment']);
         Route::post('/{post}/bookmarks', [PostsController::class, 'toggleBookmark']);
         Route::post('/{post}/views', [PostsController::class, 'view']);
+
+        Route::middleware('role:admin')->group(function() {
+            Route::patch('/{post}', [PostsController::class, 'update']);
+            Route::delete('/{post}', [PostsController::class, 'destroy']);
+        });
     });
 
     Route::get('/', [PostsController::class, 'index']);

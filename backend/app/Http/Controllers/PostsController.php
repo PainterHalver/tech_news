@@ -205,4 +205,42 @@ class PostsController extends Controller
 
         return response()->json($posts, 200);
     }
+
+    // ADMIN ACTIONS
+    public function update(Post $post, Request $request): JsonResponse
+    {
+        $fields = $request->validate([
+            'title' => 'string|min:3',
+            'description' => 'string|nullable',
+            'image' => 'string|nullable',
+            'link' => 'string|nullable',
+        ]);
+
+        // update non-null fields
+        foreach ($fields as $key => $value) {
+            if ($value && $value !== '') {
+                $post->$key = $value;
+            }
+        }
+        $post->save();
+
+        return response()->json([
+            'success' => 1,
+            'data' => [
+                'post' => $post,
+            ],
+        ], 200);
+    }
+
+    public function destroy(Post $post): JsonResponse
+    {
+        $post->delete();
+
+        return response()->json([
+            'success' => 1,
+            'data' => [
+                'post' => $post,
+            ],
+        ], 200);
+    }
 }

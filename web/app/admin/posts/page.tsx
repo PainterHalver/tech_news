@@ -8,6 +8,7 @@ import moment from "moment";
 import "moment/locale/vi";
 import { BiCommentDetail, BiUpvote } from "react-icons/bi";
 import Link from "next/link";
+import { EditPostModal } from "./EditPostModal";
 moment.locale("vi");
 
 const PER_PAGE = 10;
@@ -136,6 +137,8 @@ export default function ManageUsersPage() {
           ))}
         </div>
       </div>
+
+      <EditPostModal selectedPost={selectedPost} setPosts={setPosts} posts={posts} />
     </main>
   );
 }

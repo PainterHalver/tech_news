@@ -1,10 +1,9 @@
 "use client";
-import { closeModal, showModal } from "@/lib/utils";
+import axios from "@/lib/axios";
 import Axios, { AxiosError } from "axios";
-import { signIn, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import axios from "@/lib/axios";
 
 type EditErrors = {
   password?: string[];
