@@ -9,6 +9,7 @@ import "moment/locale/vi";
 import { BiCommentDetail, BiUpvote } from "react-icons/bi";
 import Link from "next/link";
 import { EditPostModal } from "./EditPostModal";
+import { ConfirmDeleteModal } from "./ConfirmDeleteModal";
 moment.locale("vi");
 
 const PER_PAGE = 10;
@@ -29,7 +30,7 @@ export default function ManageUsersPage() {
       setFetching(true);
       const res = await axios.get(`/api/posts?per_page=100000&page=1&search=${search ?? query}`);
       const posts = res.data as Paginated<Post>;
-      setPosts((prev) => [...prev, ...posts.data]);
+      setPosts(posts.data);
     } catch (error) {
       console.log(error);
     } finally {
@@ -119,13 +120,21 @@ export default function ManageUsersPage() {
                   >
                     Sửa
                   </button>
-                  <button className="btn btn-error btn-sm">Xóa</button>
+                  <button
+                    className="btn btn-error btn-sm"
+                    onClick={() => {
+                      setSelectedPost(post);
+                      showModal("delete_post_modal");
+                    }}
+                  >
+                    Xóa
+                  </button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-        <div className="join mt-3 flex justify-end">
+        <div className="join mt-3 flex justify-end flex-wrap">
           {pageNumbers.map((pageNumber) => (
             <button
               key={pageNumber}
@@ -139,6 +148,7 @@ export default function ManageUsersPage() {
       </div>
 
       <EditPostModal selectedPost={selectedPost} setPosts={setPosts} posts={posts} />
+      <ConfirmDeleteModal selectedPost={selectedPost} fetchPosts={fetchPosts} />
     </main>
   );
 }

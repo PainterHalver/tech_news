@@ -244,6 +244,6 @@ class PostsController extends Controller
             'data' => [
                 'post' => $post,
             ],
-        ], 200);
+        ], 204);
     }
 }

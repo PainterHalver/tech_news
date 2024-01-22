@@ -109,7 +109,7 @@ export default function ManageUsersPage() {
             ))}
           </tbody>
         </table>
-        <div className="join mt-3 flex justify-end">
+        <div className="join mt-3 flex justify-end flex-wrap">
           {pageNumbers.map((pageNumber) => (
             <button
               key={pageNumber}
