@@ -223,6 +223,9 @@ class PostsController extends Controller
             }
         }
         $post->save();
+        $post->publisher;
+        $post->votes_score = (int) $post->votes()->sum('value');
+        $post->loadCount('comments as comments_count');
 
         return response()->json([
             'success' => 1,

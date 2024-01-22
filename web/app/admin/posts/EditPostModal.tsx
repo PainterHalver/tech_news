@@ -36,7 +36,7 @@ export const EditPostModal = ({ selectedPost, posts, setPosts }: Props) => {
         link: link.value,
       });
 
-      const postData = res.data;
+      const postData = res.data.data.post;
 
       const index = posts.findIndex((post) => post.id === postData.id);
       const newPosts = [...posts];
