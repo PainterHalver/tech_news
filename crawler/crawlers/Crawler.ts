@@ -36,27 +36,26 @@ export default abstract class Crawler {
   async crawlData(): Promise<void> {}
 
   async saveData(): Promise<void> {
-    const ids: any[] = [];
     await Promise.all(
       this.data.map(async (post) => {
         const [rows, _] = await this.db.query<any[]>("SELECT id FROM posts WHERE publisher_id = ? AND link = ? LIMIT 1", [post.publisher_id, post.link]);
         if (rows.length === 0) {
-          const [result] = await this.db.execute<ResultSetHeader>(
+          const result = await this.db.execute<ResultSetHeader>(
             "INSERT INTO posts (publisher_id, title, content, description, image, link, published_at, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), NOW())",
             [post.publisher_id, post.title, post.content, post.description, post.image, post.link, post.published_at]
           );
-          ids.push(result.insertId);
+
+          // Send message to SQS if has permission
+          if (process.env.SQS === "true") {
+            const id = result[0].insertId;
+            const command = new SendMessageCommand({
+              QueueUrl: QUEUE_URL,
+              MessageBody: JSON.stringify([id]),
+            });
+            await client.send(command);
+          }
         }
       })
     );
-
-    // Send message to SQS if has permission
-    if (process.env.SQS === "true") {
-      const command = new SendMessageCommand({
-        QueueUrl: QUEUE_URL,
-        MessageBody: JSON.stringify(ids),
-      });
-      await client.send(command);
-    }
   }
 }
