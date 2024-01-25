@@ -32,7 +32,7 @@ const generativeModel = vertex_ai.preview.getGenerativeModel({
   },
 });
 
-async function generateContent() {
+async function generateContent(content) {
   const req = {
     contents: [{ role: 'user', parts: [{ text: "tell me a random number" }] }],
   };
@@ -55,11 +55,11 @@ export const handler = async (event, context) => {
     let ids = event.Records.map(record => JSON.parse(record.body)).flat();
     for (const id of ids) {
       // Check if generated content already exists
-      const [rows, _] = await db.query("SELECT description_generated FROM posts WHERE id = ?", [id]);
+      const [rows, _] = await db.query("SELECT content, description_generated FROM posts WHERE id = ?", [id]);
       if (rows[0].description_generated) continue;
 
       // Generate content
-      const content = await generateContent();
+      const content = await generateContent(content);
 
       // Update database
       await db.query("UPDATE posts SET description_generated = ? WHERE id = ?", [content, id]);

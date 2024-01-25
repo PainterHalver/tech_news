@@ -31,10 +31,17 @@ export default class VnExpress extends Crawler {
         */
         const description = JSDOM.fragment(item.description).textContent || "";
         const image_link = JSDOM.fragment(item.description).querySelector("img")?.getAttribute("src") || "";
+        const res = await fetch(item.link);
+        const dom = new JSDOM(await res.text());
+        const descriptionNodes = dom.window.document.querySelectorAll("article p.Normal");
+        const content = Array.from(descriptionNodes)
+          .map((node) => node.textContent)
+          .join("\n");
 
         const post: Post = {
           publisher_id: this.publisher_id,
           title: item.title,
+          content: content,
           description: description,
           image: image_link,
           link: item.link,

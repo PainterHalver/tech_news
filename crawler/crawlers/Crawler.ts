@@ -36,14 +36,10 @@ export default abstract class Crawler {
       this.data.map(async (post) => {
         const [rows, _] = await this.db.query<any[]>("SELECT id FROM posts WHERE publisher_id = ? AND link = ? LIMIT 1", [post.publisher_id, post.link]);
         if (rows.length === 0) {
-          await this.db.execute<ResultSetHeader>("INSERT INTO posts (publisher_id, title, description, image, link, published_at, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, NOW(), NOW())", [
-            post.publisher_id,
-            post.title,
-            post.description,
-            post.image,
-            post.link,
-            post.published_at,
-          ]);
+          await this.db.execute<ResultSetHeader>(
+            "INSERT INTO posts (publisher_id, title, content, description, image, link, published_at, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), NOW())",
+            [post.publisher_id, post.title, post.content, post.description, post.image, post.link, post.published_at]
+          );
         }
       })
     );

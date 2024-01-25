@@ -33,6 +33,7 @@ export default class DevTo extends Crawler {
         const post: Post = {
           publisher_id: this.publisher_id,
           title: item.title,
+          content: description,
           description: description,
           image: image_link,
           link: item.link,
