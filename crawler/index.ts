@@ -1,7 +1,7 @@
 import mysql from "mysql2/promise";
 import Crawler from "./crawlers/Crawler";
 import DevTo from "./crawlers/DevTo";
-import { log, log_success } from "./lib/utils";
+import { log, log_error, log_success } from "./lib/utils";
 import VnExpress from "./crawlers/VnExpress";
 
 const main = async () => {
@@ -16,10 +16,15 @@ const main = async () => {
 
   for (const crawler of crawlers) {
     log(`[+] Crawling ${crawler.publisher_name}... `);
-    await crawler.loadId();
-    await crawler.crawlData();
-    await crawler.saveData();
-    log_success("OK\n");
+    try {
+      await crawler.loadId();
+      await crawler.crawlData();
+      await crawler.saveData();
+      log_success("OK\n");
+    } catch (error) {
+      log_error("ERROR\n");
+      console.error(error);
+    }
   }
 
   await db.end();
