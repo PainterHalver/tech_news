@@ -1,9 +1,5 @@
 import { Post } from "../lib/type";
 import mysql, { ResultSetHeader } from "mysql2/promise";
-import { SendMessageCommand, SQSClient } from "@aws-sdk/client-sqs";
-
-const client = new SQSClient({ region: "ap-southeast-1" });
-const QUEUE_URL = "https://sqs.ap-southeast-1.amazonaws.com/008189915245/NewsSummarizationQueue";
 
 export default abstract class Crawler {
   private db: mysql.Connection;
@@ -44,16 +40,6 @@ export default abstract class Crawler {
             "INSERT INTO posts (publisher_id, title, content, description, image, link, published_at, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), NOW())",
             [post.publisher_id, post.title, post.content, post.description, post.image, post.link, post.published_at]
           );
-
-          // Send message to SQS if has permission
-          if (process.env.SQS === "true") {
-            const id = result[0].insertId;
-            const command = new SendMessageCommand({
-              QueueUrl: QUEUE_URL,
-              MessageBody: JSON.stringify([id]),
-            });
-            await client.send(command);
-          }
         }
       })
     );
