@@ -26,21 +26,29 @@ const generativeModel = vertex_ai.preview.getGenerativeModel({
   model: model,
   generation_config: {
     "max_output_tokens": 768,
-    "temperature": 0.2,
+    "temperature": 0,
     "top_p": 0.8,
     "top_k": 40
   },
 });
 
 async function generateContent(content) {
+  const prompt =
+    `
+  Nhiệm vụ của bạn là tóm tắt bài báo sau trong dưới 150 từ. Tránh dùng thuật ngữ phức tạp và giải thích một cách dễ hiểu nhất.
+
+  Bài báo:
+  ${content}
+  `
+
   const req = {
-    contents: [{ role: 'user', parts: [{ text: "tell me a random number" }] }],
+    contents: [{ role: 'user', parts: [{ text: prompt }] }],
   };
 
   const response = await generativeModel.generateContent(req);
 
-  const content = response.response.candidates[0].content.parts.map(part => part.text).join("\n");
-  return content;
+  const result = response.response.candidates[0].content.parts.map(part => part.text).join("\n");
+  return result;
 };
 
 export const handler = async (event, context) => {
@@ -59,7 +67,7 @@ export const handler = async (event, context) => {
       if (rows[0].description_generated) continue;
 
       // Generate content
-      const content = await generateContent(content);
+      const content = await generateContent(rows[0].content);
 
       // Update database
       await db.query("UPDATE posts SET description_generated = ? WHERE id = ?", [content, id]);
