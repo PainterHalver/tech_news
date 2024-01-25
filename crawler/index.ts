@@ -6,10 +6,10 @@ import VnExpress from "./crawlers/VnExpress";
 
 const main = async () => {
   const db = await mysql.createConnection({
-    host: "127.0.0.1",
-    user: "root",
-    password: "root",
-    database: "tech_news",
+    host: process.env.DB_HOST || "127.0.0.1",
+    user: process.env.DB_USER || "root",
+    password: process.env.DB_PASS || "root",
+    database: process.env.DB_NAME || "tech_news",
   });
 
   const crawlers: Crawler[] = [new DevTo(db), new VnExpress(db)];
