@@ -18,6 +18,7 @@ import PostVotes from "./PostVotes";
 import PublisherCard from "./PublisherCard";
 import ReadPostButton from "./ReadPostButton";
 import "moment/locale/vi";
+import PostDescriptionAI from "./PostDescriptionAI";
 moment.locale("vi");
 
 type Props = {
@@ -74,6 +75,7 @@ export default function PostPage({ params }: Props) {
         <div className="flex flex-col px-5 py-7">
           <h1 className="text-3xl font-bold text-text-primary">{post.title}</h1>
           <p className="text-sm py-2">{moment(post.published_at).fromNow()}</p>
+          <PostDescriptionAI post={post} />
           <PostDescription post={post} />
         </div>
         <div className="flex justify-between border-y border-border py-2 px-5">

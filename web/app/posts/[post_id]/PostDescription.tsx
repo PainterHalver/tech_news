@@ -2,15 +2,15 @@
 
 import { Post } from "@/lib/types";
 import { trimString } from "@/lib/utils";
-import { useState } from "react";
+import { HTMLAttributes, useState } from "react";
 
 type Props = {
   post: Post;
-};
+} & HTMLAttributes<HTMLDivElement>;
 
 const PREVIEW_LENGTH = 380;
 
-export default function PostDescription({ post }: Props) {
+export default function PostDescription({ post, ...props }: Props) {
   const [shouldShowFullDescription, setShouldShowFullDescription] = useState(false);
 
   const toggleDescription = () => {
@@ -18,7 +18,7 @@ export default function PostDescription({ post }: Props) {
   };
 
   return (
-    <div>
+    <div {...props}>
       <p className="text-text-primary font-[300] whitespace-pre-line">
         {shouldShowFullDescription ? post.description : trimString(post.description, PREVIEW_LENGTH)}
         &nbsp;&nbsp;

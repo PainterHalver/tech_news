@@ -24,6 +24,7 @@ export type Post = {
   publisher_id: number;
   title: string;
   description: string;
+  description_generated: string;
   image: string;
   link: string;
   published_at: Date;

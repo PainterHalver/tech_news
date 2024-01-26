@@ -27,6 +27,10 @@ class Post extends Model
         'published_at' => 'datetime',
     ];
 
+    protected $hidden = [
+        'content',
+    ];
+
     public function publisher(): BelongsTo
     {
         return $this->belongsTo(Publisher::class);
