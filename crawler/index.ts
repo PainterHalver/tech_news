@@ -6,6 +6,11 @@ import VnExpress from "./crawlers/VnExpress";
 import BaoThanhNien from "./crawlers/BaoThanhNien";
 import VTCNews from "./crawlers/VTCNews";
 import DanTri from "./crawlers/DanTri";
+import ZingNews from "./crawlers/ZingNews";
+import TuoiTre from "./crawlers/TuoiTre";
+import TinhTe from "./crawlers/TinhTe";
+import VietNamNet from "./crawlers/VietNamNet";
+import Viblo from "./crawlers/Viblo";
 
 const main = async () => {
   const db = await mysql.createConnection({
@@ -16,11 +21,16 @@ const main = async () => {
   });
 
   const crawlers: Crawler[] = [
-    // new DevTo(db),
-    // new VnExpress(db),
-    // new BaoThanhNien(db),
-    // new VTCNews(db),
+    new DevTo(db),
+    new VnExpress(db),
+    new BaoThanhNien(db),
+    new VTCNews(db),
     new DanTri(db),
+    new ZingNews(db),
+    new TuoiTre(db),
+    new TinhTe(db),
+    new VietNamNet(db),
+    new Viblo(db),
   ];
 
   for (const crawler of crawlers) {

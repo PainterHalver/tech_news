@@ -5,7 +5,7 @@ export default abstract class Crawler {
   private db: mysql.Connection;
 
   // Limit number of posts to be crawled per publisher
-  MAX_ITEMS = 10;
+  MAX_ITEMS = 5;
 
   publisher_id: number = 0;
   abstract readonly publisher_name: string;

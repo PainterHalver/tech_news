@@ -38,7 +38,7 @@ export default class DanTri extends Crawler {
         const title = JSDOM.fragment(item.title).textContent || "";
         const res = await fetch(item.link);
         const dom = new JSDOM(await res.text());
-        const contentNodes = dom.window.document.querySelectorAll("div[singular-content] p");
+        const contentNodes = dom.window.document.querySelectorAll("div.singular-content p");
         const content = Array.from(contentNodes)
           .map((node) => node.textContent)
           .join("\n");

@@ -85,6 +85,7 @@ export const PostCard = ({ post, isLast, addPage }: Props) => {
           width={0}
           height={0}
           style={{ width: "100%", height: "150px" }}
+          className="object-cover object-center"
         />
       </div>
       <div className="h-fit pl-2 py-2 flex items-center">
