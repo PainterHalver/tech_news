@@ -1,8 +1,11 @@
 import mysql from "mysql2/promise";
 import Crawler from "./crawlers/Crawler";
-import DevTo from "./crawlers/DevTo";
 import { log, log_error, log_success } from "./lib/utils";
+import DevTo from "./crawlers/DevTo";
 import VnExpress from "./crawlers/VnExpress";
+import BaoThanhNien from "./crawlers/BaoThanhNien";
+import VTCNews from "./crawlers/VTCNews";
+import DanTri from "./crawlers/DanTri";
 
 const main = async () => {
   const db = await mysql.createConnection({
@@ -12,7 +15,13 @@ const main = async () => {
     database: process.env.DB_NAME || "tech_news",
   });
 
-  const crawlers: Crawler[] = [new DevTo(db), new VnExpress(db)];
+  const crawlers: Crawler[] = [
+    // new DevTo(db),
+    // new VnExpress(db),
+    // new BaoThanhNien(db),
+    // new VTCNews(db),
+    new DanTri(db),
+  ];
 
   for (const crawler of crawlers) {
     log(`[+] Crawling ${crawler.publisher_name}... `);

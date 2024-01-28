@@ -17,7 +17,9 @@ export default class DevTo extends Crawler {
     const data = parser.parse(xml);
 
     await Promise.all(
-      data.rss.channel.item.map(async (item: any) => {
+      data.rss.channel.item.map(async (item: any, index: number) => {
+        if (index >= this.MAX_ITEMS) return;
+
         const res1 = await fetch(item.link);
         const dom = new JSDOM(await res1.text());
         const image_link =

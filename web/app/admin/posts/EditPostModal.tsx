@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 type EditPostErrors = {
   title?: string[];
   description?: string[];
+  description_generated?: string[];
   image?: string[];
   link?: string[];
 };
@@ -94,6 +95,25 @@ export const EditPostModal = ({ selectedPost, posts, setPosts }: Props) => {
             {editErrors.description && (
               <div className="label">
                 <span className="label-text-alt text-downvoted">{editErrors.description[0]}</span>
+              </div>
+            )}
+          </label>
+          <label className="form-control w-full">
+            <div className="label">
+              <span className="label-text text-base">Nội dung tóm tắt</span>
+            </div>
+            <textarea
+              name="description_generated"
+              placeholder="tóm tắt AI"
+              className={`input input-bordered w-full h-36 py-2 ${
+                editErrors.description_generated ? "input-error" : ""
+              }`}
+              defaultValue={selectedPost?.description_generated}
+              key={selectedPost?.id}
+            />
+            {editErrors.description_generated && (
+              <div className="label">
+                <span className="label-text-alt text-downvoted">{editErrors.description_generated[0]}</span>
               </div>
             )}
           </label>

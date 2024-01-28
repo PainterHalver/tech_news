@@ -3,6 +3,10 @@ import mysql, { ResultSetHeader } from "mysql2/promise";
 
 export default abstract class Crawler {
   private db: mysql.Connection;
+
+  // Limit number of posts to be crawled per publisher
+  MAX_ITEMS = 10;
+
   publisher_id: number = 0;
   abstract readonly publisher_name: string;
   abstract readonly publisher_link: string;

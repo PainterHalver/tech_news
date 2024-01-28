@@ -17,7 +17,7 @@ export default class VnExpress extends Crawler {
     const data = parser.parse(xml);
 
     await Promise.all(
-      data.rss.channel.item.map(async (item: any) => {
+      data.rss.channel.item.map(async (item: any, index: number) => {
         /*
         <item>
           <title>Musk bị 'bóc mẽ' khi khoe robot gấp quần áo</title>
@@ -29,6 +29,8 @@ export default class VnExpress extends Crawler {
           <guid>https://vnexpress.net/musk-bi-boc-me-khi-khoe-robot-gap-quan-ao-4701271.html</guid>
         </item>
         */
+        if (index >= this.MAX_ITEMS) return;
+
         const description = JSDOM.fragment(item.description).textContent || "";
         const image_link = JSDOM.fragment(item.description).querySelector("img")?.getAttribute("src") || "";
         const res = await fetch(item.link);

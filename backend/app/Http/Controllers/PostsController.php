@@ -215,6 +215,7 @@ class PostsController extends Controller
             'description' => 'string|nullable',
             'image' => 'string|nullable',
             'link' => 'string|nullable',
+            'description_generated' => 'string|nullable',
         ]);
 
         // update non-null fields
