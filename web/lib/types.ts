@@ -17,6 +17,8 @@ export type Publisher = {
   created_at: Date;
   updated_at: Date;
   user_followed?: boolean;
+  followers_count?: number;
+  posts_count?: number;
 };
 
 export type Post = {

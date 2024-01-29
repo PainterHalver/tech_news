@@ -39,6 +39,9 @@ Route::prefix('posts')->group(function() {
 Route::prefix('publishers')->group(function() {
    Route::middleware('auth:sanctum')->group(function() {
       Route::post('/{publisher}/follows', [PublishersController::class, 'follow']);
+      Route::middleware('role:admin')->group(function() {
+          Route::get('/', [PublishersController::class, 'index']);
+      });
    });
 });
 

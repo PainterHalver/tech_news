@@ -3,6 +3,7 @@ import Link from "next/link";
 import { AiOutlineFire } from "react-icons/ai";
 import { BsBookmark } from "react-icons/bs";
 import { GoHistory } from "react-icons/go";
+import { GrResources } from "react-icons/gr";
 import { HiOutlineHome, HiOutlineUsers, HiOutlineNewspaper } from "react-icons/hi2";
 import { IoCheckboxOutline, IoSearchOutline } from "react-icons/io5";
 import { PiChatCircleDots } from "react-icons/pi";
@@ -70,6 +71,11 @@ export default async function SideBar() {
           <li>
             <Link href={"/admin/posts"}>
               <HiOutlineNewspaper className="text-lg" /> Quản lý tin tức
+            </Link>
+          </li>
+          <li>
+            <Link href={"/admin/publishers"}>
+              <GrResources className="text-lg" /> Các nguồn đăng tin
             </Link>
           </li>
         </ul>
