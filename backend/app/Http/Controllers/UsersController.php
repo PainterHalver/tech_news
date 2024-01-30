@@ -107,8 +107,8 @@ class UsersController extends Controller
     public function update(User $user, Request $request): JsonResponse
     {
         $fields = $request->validate([
-            'full_name' => 'string|min:3|max:50',
-            'password' => 'string|min:4',
+            'full_name' => 'string|nullable|min:3|max:50',
+            'password' => 'string|nullable|min:4',
             'role' => 'string|in:admin,user',
             'username' => 'string|min:3|max:20|unique:users,username,'.$user->id,
         ]);
