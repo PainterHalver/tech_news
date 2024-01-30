@@ -1,6 +1,7 @@
 import mysql from "mysql2/promise";
 import Crawler from "./crawlers/Crawler";
-import { log, log_error, log_success } from "./lib/utils";
+import { log, log_error, log_success, sendTelegramMessage } from "./lib/utils";
+import dotenv from "dotenv";
 import DevTo from "./crawlers/DevTo";
 import VnExpress from "./crawlers/VnExpress";
 import BaoThanhNien from "./crawlers/BaoThanhNien";
@@ -11,6 +12,8 @@ import TuoiTre from "./crawlers/TuoiTre";
 import TinhTe from "./crawlers/TinhTe";
 import VietNamNet from "./crawlers/VietNamNet";
 import Viblo from "./crawlers/Viblo";
+
+dotenv.config();
 
 const main = async () => {
   const db = await mysql.createConnection({
@@ -42,11 +45,21 @@ const main = async () => {
       log_success("OK\n");
     } catch (error) {
       log_error("ERROR\n");
+      sendTelegramMessage(`[!] ERROR: Crawling ${crawler.publisher_name} failed: ${JSON.stringify(error, null, 2)}`);
       console.error(error);
     }
   }
 
   await db.end();
+
+  const message = `
+    [+] Báo cáo crawler:
+📅Date: ${new Date().toLocaleString()}
+${crawlers.map((crawler) => `- ${crawler.publisher_fullname}: Đã thêm ${crawler.data.length} tin.`).join("\n")}
+  `;
+  await sendTelegramMessage(message);
+
+  console.log("[+] Crawling finished");
 };
 
 main();
