@@ -63,7 +63,7 @@ export const LoginModal = () => {
           <p className={`${loginError ? "text-downvoted" : "hidden"} pt-2`}>Tài khoản không đúng</p>
           <p className="pt-2">
             Người dùng mới? &nbsp;
-            <a
+            <span
               className="link hover:opacity-100 opacity-90"
               onClick={() => {
                 closeModal("login_modal");
@@ -71,7 +71,7 @@ export const LoginModal = () => {
               }}
             >
               Đăng ký ngay
-            </a>
+            </span>
           </p>
           <button type="submit" className="btn btn-outline mt-3" disabled={loading} onClick={handleLogin}>
             {loading ? <span className="loading loading-spinner"></span> : "Xác nhận"}

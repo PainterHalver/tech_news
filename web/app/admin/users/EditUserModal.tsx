@@ -61,7 +61,7 @@ export const EditUserModal = ({ selectedUser, users, setUsers }: Props) => {
     <dialog id="edit_user_modal" className="modal">
       <div className="modal-box flex flex-col no-scrollbar">
         <h3 className="font-bold text-xl text-center text-text-primary">Chỉnh sửa người dùng</h3>
-        <form className="form-control w-full" onSubmit={handleEditUser}>
+        <form className="form-control w-full" onSubmit={handleEditUser} autoComplete="off">
           <label className="form-control w-full">
             <div className="label">
               <span className="label-text text-base">Tên đăng nhập</span>
@@ -72,6 +72,7 @@ export const EditUserModal = ({ selectedUser, users, setUsers }: Props) => {
               placeholder="tên đăng nhập"
               className={`input input-bordered w-full ${editErrors.username ? "input-error" : ""}`}
               defaultValue={selectedUser?.username}
+              autoComplete="new-off"
             />
             {editErrors.username && (
               <div className="label">

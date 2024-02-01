@@ -24,7 +24,7 @@ type Props = {
 export const PostCard = ({ post, isLast, addPage }: Props) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const session = useSession();
-  const [userVote, setUserVote] = useState(post.user_vote);
+  const [userVote, setUserVote] = useState(post.user_vote || 0);
   const [votesScore, setVotesScore] = useState(post.votes_score);
 
   useEffect(() => {

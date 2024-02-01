@@ -57,10 +57,10 @@ const NavBar = () => {
                 </Link>
               </li>
               <li>
-                <a className="text-base" onClick={handleLogout}>
+                <div className="text-base" onClick={handleLogout}>
                   <MdLogout className="text-xl" />
                   Đăng xuất
-                </a>
+                </div>
               </li>
             </ul>
           </div>

@@ -131,7 +131,7 @@ export const RegisterModal = () => {
           </label>
           <p className="pt-2">
             Đã có tài khoản? &nbsp;
-            <a
+            <span
               className="link hover:opacity-100 opacity-90"
               onClick={() => {
                 closeModal("register_modal");
@@ -139,7 +139,7 @@ export const RegisterModal = () => {
               }}
             >
               Đăng nhập
-            </a>
+            </span>
           </p>
           <button type="submit" className="btn btn-outline mt-3" disabled={loading} onClick={handleRegister}>
             {loading ? <span className="loading loading-spinner"></span> : "Xác nhận"}
