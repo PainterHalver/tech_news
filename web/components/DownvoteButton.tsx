@@ -9,7 +9,7 @@ type Props = {
 
 export default function DownvoteButton({ userVote, className, onClick }: Props) {
   return (
-    <button className={`text-2xl btn btn-ghost btn-square btn-sm ${className}`} onClick={onClick}>
+    <button className={`text-2xl btn btn-ghost btn-square btn-sm ${className}`} onClick={onClick} aria-label="downvote">
       <BiDownvote className={`${userVote === -1 && "text-downvoted"}`} />
     </button>
   );
