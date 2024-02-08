@@ -4,7 +4,7 @@ const mysql = require('mysql2/promise');
 process.env.GOOGLE_APPLICATION_CREDENTIALS = './service-account.json';
 
 // Initialize Vertex with your Cloud project and location
-const vertex_ai = new VertexAI({ project: 'essential-oven-403504', location: 'asia-southeast1' });
+const vertex_ai = new VertexAI({ project: 'my-gcp-project-413702', location: 'asia-southeast1' });
 const model = 'gemini-pro';
 
 // Instantiate the models
@@ -77,6 +77,8 @@ const main = async () => {
     }
   } catch (error) {
     console.log("MAIN ERROR: ", error);
+  } finally {
+    await db.end();
   }
 }
 
