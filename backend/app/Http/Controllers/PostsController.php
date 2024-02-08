@@ -29,7 +29,7 @@ class PostsController extends Controller
         $followed = $fields['followed'] ?? false;
         $search = $fields['search'] ?? '';
 
-        $posts = Post::select(['id', 'publisher_id', 'title', 'description', 'image', 'link', 'published_at'])
+        $posts = Post::select(['id', 'publisher_id', 'title', 'description', 'image', 'link', 'published_at', 'description_generated'])
             ->with('publisher')
             ->withCount(['comments as comments_count'])
             ->addSelect([

@@ -29,10 +29,11 @@ export const EditPostModal = ({ selectedPost, posts, setPosts }: Props) => {
     try {
       setLoading(true);
       setEditErrors({});
-      const { title, description, image, link } = e.target.elements;
+      const { title, description, description_generated, image, link } = e.target.elements;
       const res = await axios.patch(`/api/posts/${selectedPost?.id}`, {
         title: title.value,
         description: description.value,
+        description_generated: description_generated.value,
         image: image.value,
         link: link.value,
       });
