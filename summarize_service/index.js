@@ -34,8 +34,9 @@ async function generateContent(content) {
 };
 
 const main = async () => {
+  let db;
   try {
-    const db = await mysql.createConnection({
+    db = await mysql.createConnection({
       host: process.env.DB_HOST || "127.0.0.1",
       user: process.env.DB_USER || "root",
       password: process.env.DB_PASS || "root",
@@ -48,7 +49,7 @@ const main = async () => {
         // get the first post that has not been generated
         const [rows, _] = await db.query("SELECT * FROM posts WHERE description_generated IS NULL LIMIT 1");
         if (rows.length === 0) {
-          throw new Error("No more post to generate");
+          break;
         }
 
         // if content has less than 150 words, skip
@@ -75,6 +76,8 @@ const main = async () => {
         await new Promise(resolve => setTimeout(resolve, 3000));
       }
     }
+
+    console.log("Done! No more posts to generate, exiting...");
   } catch (error) {
     console.log("MAIN ERROR: ", error);
   } finally {
