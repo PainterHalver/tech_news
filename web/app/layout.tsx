@@ -14,6 +14,14 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Tech News",
   description: "Tổng hợp tin tức công nghệ mới nhất từ các trang tin tức uy tín",
+  icons: [
+    {
+      url: "/public/icon.png",
+      href: "/public/icon.png",
+      rel: "icon",
+      type: "image/x-icon",
+    },
+  ],
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {

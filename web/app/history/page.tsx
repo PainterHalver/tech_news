@@ -26,6 +26,7 @@ export default function Home() {
 
   useEffect(() => {
     fetchPosts();
+    document.title = "Lịch sử đọc tin | Tech News";
   }, []);
 
   return (

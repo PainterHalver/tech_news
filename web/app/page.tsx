@@ -28,6 +28,7 @@ export default function Home() {
   };
 
   useEffect(() => {
+    document.title = "Tech News";
     fetchPosts();
   }, [page]);
 

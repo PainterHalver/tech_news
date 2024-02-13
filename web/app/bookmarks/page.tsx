@@ -31,6 +31,10 @@ export default function Bookmarks() {
     fetchPosts();
   }, [page]);
 
+  useEffect(() => {
+    document.title = "Bookmark | Tech News";
+  }, []);
+
   return (
     <main className="flex flex-col py-5 lg:px-16 px-8 min-h-full">
       <h1 className="text-xl font-bold">Tin tức đã bookmark</h1>

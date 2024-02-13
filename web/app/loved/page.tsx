@@ -40,6 +40,10 @@ export default function MostLoved() {
     fetchPosts();
   }, [page]);
 
+  useEffect(() => {
+    document.title = "Yêu thích | Tech News";
+  }, []);
+
   return (
     <main className="flex flex-col py-5 lg:px-16 px-8 min-h-full">
       <h1 className="text-xl font-bold mb-3">Tin tức được yêu thích</h1>

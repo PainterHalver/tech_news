@@ -52,6 +52,7 @@ export default function ProfilePage() {
     };
 
     fetchStats();
+    document.title = "Hồ sơ | Tech News";
   }, []);
 
   if (!user) return "Đang tải....";

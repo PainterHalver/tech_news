@@ -54,6 +54,7 @@ export default function PostPage({ params }: Props) {
     (async () => {
       const postData = await getPost(params.post_id);
       setPost(postData);
+      document.title = postData.title + " | Tech News";
     })();
   }, []);
 

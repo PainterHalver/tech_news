@@ -40,6 +40,10 @@ export default function MostDiscussed() {
     fetchPosts();
   }, [page]);
 
+  useEffect(() => {
+    document.title = "Bình luận nhiều | Tech News";
+  }, []);
+
   return (
     <main className="flex flex-col py-5 lg:px-16 px-8 min-h-full">
       <h1 className="text-xl font-bold mb-3">Tin tức được bàn luận nhiều nhất</h1>

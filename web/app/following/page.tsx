@@ -29,6 +29,7 @@ export default function Bookmarks() {
 
   useEffect(() => {
     fetchPosts();
+    document.title = "Theo dõi | Tech News";
   }, [page]);
 
   return (

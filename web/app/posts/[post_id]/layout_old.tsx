@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
     const post = await getPost(params.post_id);
 
     return {
-      title: "Tech News | " + post.title,
+      title: post.title + " | Tech News",
       description: trimString(post.description, 100),
       openGraph: {
         images: [post.image],
