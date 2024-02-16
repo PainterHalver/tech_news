@@ -8,6 +8,7 @@ import { getServerSession } from "next-auth";
 import SessionProvider from "@/components/SessionProvider";
 import { Toaster } from "react-hot-toast";
 import { RegisterModal } from "@/components/RegisterModal";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -43,6 +44,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <RegisterModal />
         </body>
       </SessionProvider>
+      <GoogleAnalytics gaId="G-EXTZ9WL2XQ" />
     </html>
   );
 }
