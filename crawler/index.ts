@@ -24,7 +24,7 @@ const main = async () => {
   });
 
   const crawlers: Crawler[] = [
-    new DevTo(db),
+    // new DevTo(db),
     new VnExpress(db),
     new BaoThanhNien(db),
     new VTCNews(db),
@@ -54,7 +54,7 @@ const main = async () => {
 
   const message = `
     [+] Báo cáo crawler:
-📅Date: ${new Date().toLocaleString()}
+📅Thời gian: ${new Date().toLocaleString()}
 ${crawlers.map((crawler) => `- ${crawler.publisher_fullname}: Đã thêm ${crawler.data.length} tin.`).join("\n")}
   `;
   await sendTelegramMessage(message);
