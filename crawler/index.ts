@@ -45,7 +45,7 @@ const main = async () => {
       log_success("OK\n");
     } catch (error) {
       log_error("ERROR\n");
-      sendTelegramMessage(`[!] ERROR: Crawling ${crawler.publisher_name} failed: ${JSON.stringify(error, null, 2)}`);
+      sendTelegramMessage(`[!] ERROR: Crawling ${crawler.publisher_name} failed: ${JSON.stringify(error)}`);
       console.error(error);
     }
   }
