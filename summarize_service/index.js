@@ -33,6 +33,28 @@ async function generateContent(content) {
   return result;
 };
 
+const sendTelegramMessage = async (message) => {
+  const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
+  const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
+
+  try {
+    const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+    const response = await fetch(url, {
+      method: "POST",
+      body: JSON.stringify({
+        chat_id: TELEGRAM_CHAT_ID,
+        text: message,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+
 const main = async () => {
   let db;
   try {
@@ -73,6 +95,7 @@ const main = async () => {
         if (retry > 10) {
           throw new Error("Too many retries, exiting...");
         }
+
         if (typeof error === "VertexAI.ClientError") {
           console.log("VertexAI.ClientError, waiting 10 seconds before continue...");
           await new Promise(resolve => setTimeout(resolve, 10000));
@@ -85,6 +108,7 @@ const main = async () => {
 
     console.log("Done! No more posts to generate, exiting...");
   } catch (error) {
+    sendTelegramMessage("Summarizer Error: " + JSON.stringify(error));
     console.log("MAIN ERROR: ", error);
   } finally {
     await db.end();
