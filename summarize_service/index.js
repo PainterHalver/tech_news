@@ -5,7 +5,7 @@ process.env.GOOGLE_APPLICATION_CREDENTIALS = './service-account.json';
 
 // Initialize Vertex with your Cloud project and location
 const vertex_ai = new VertexAI({ project: 'my-gcp-project-413702', location: 'asia-southeast1' });
-const model = 'gemini-pro';
+const model = 'gemini-1.0-pro-001';
 
 // Instantiate the models
 const generativeModel = vertex_ai.preview.getGenerativeModel({
