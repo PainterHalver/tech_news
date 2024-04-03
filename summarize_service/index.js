@@ -44,6 +44,7 @@ const main = async () => {
     })
 
     // MAIN LOOP
+    let retry = 0;
     while (true) {
       try {
         // get the first post that has not been generated
@@ -65,8 +66,13 @@ const main = async () => {
         await db.query("UPDATE posts SET description_generated = ? WHERE id = ?", [summary, rows[0].id]);
 
         console.log(`Updated post ${rows[0].id}`);
+        retry = 0
       } catch (error) {
         console.log("LOOP ERROR: ", error)
+        retry++
+        if (retry > 10) {
+          throw new Error("Too many retries, exiting...");
+        }
         if (typeof error === "VertexAI.ClientError") {
           console.log("VertexAI.ClientError, waiting 10 seconds before continue...");
           await new Promise(resolve => setTimeout(resolve, 10000));
