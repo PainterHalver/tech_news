@@ -21,7 +21,7 @@ const generativeModel = vertex_ai.preview.getGenerativeModel({
 async function generateContent(content) {
   const req = {
     contents: [
-      { role: 'user', parts: [{ text: "Nhiệm vụ của bạn là tóm tắt các tin tức sau bằng tiếng Việt trong dưới 150 từ. Bạn sẽ tránh dùng thuật ngữ phức tạp và giải thích một cách dễ hiểu nhất. Bạn sẽ chỉ trả lời bằng một hoặc vài đoạn văn bản. Nội dung tin tức: " + content }] },
+      { role: 'user', parts: [{ text: "Nhiệm vụ của bạn là tóm tắt các tin tức sau bằng tiếng Việt trong dưới 150 từ. Bạn sẽ tránh dùng thuật ngữ phức tạp và giải thích một cách dễ hiểu nhất. Nội dung tin tức: " + content }] },
     ],
   };
 
