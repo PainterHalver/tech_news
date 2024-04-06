@@ -1,4 +1,4 @@
-const { VertexAI } = require('@google-cloud/vertexai');
+const { VertexAI, HarmCategory, HarmBlockThreshold } = require('@google-cloud/vertexai');
 const mysql = require('mysql2/promise');
 
 process.env.GOOGLE_APPLICATION_CREDENTIALS = './service-account.json';
@@ -8,14 +8,32 @@ const vertex_ai = new VertexAI({ project: 'my-gcp-project-413702', location: 'as
 const model = 'gemini-1.0-pro-001';
 
 // Instantiate the models
-const generativeModel = vertex_ai.preview.getGenerativeModel({
+const generativeModel = vertex_ai.getGenerativeModel({
   model: model,
-  generation_config: {
+  generationConfig: {
     "max_output_tokens": 768,
-    "temperature": 0,
-    "top_p": 0.1,
+    "temperature": 0.2,
+    "top_p": 0.8,
     "top_k": 40
   },
+  safetySettings: [
+    {
+      'category': HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
+      'threshold': HarmBlockThreshold.BLOCK_ONLY_HIGH,
+    },
+    {
+      'category': HarmCategory.HARM_CATEGORY_HATE_SPEECH,
+      'threshold': HarmBlockThreshold.BLOCK_ONLY_HIGH,
+    },
+    {
+      'category': HarmCategory.HARM_CATEGORY_HARASSMENT,
+      'threshold': HarmBlockThreshold.BLOCK_ONLY_HIGH,
+    },
+    {
+      'category': HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
+      'threshold': HarmBlockThreshold.BLOCK_ONLY_HIGH,
+    },
+  ],
 });
 
 async function generateContent(content) {
@@ -25,9 +43,17 @@ async function generateContent(content) {
     ],
   };
 
-  const response = await generativeModel.generateContent(req);
+  const response = await generativeModel.generateContentStream(req);
+  let result = "";
+  for await (const item of response.stream) {
+    if (item.candidates[0].finishReason === 'SAFETY') {
+      throw new Error(`Safety block error: ${JSON.stringify(item)}}`);
+    } else {
+      result += item.candidates[0].content.parts.map(part => part.text).join("\n");
+    }
+  }
 
-  const result = response.response.candidates[0].content.parts.map(part => part.text).join("\n");
+  // const result = response.response.candidates[0].content.parts.map(part => part.text).join("\n");
   return result;
 };
 
@@ -106,7 +132,7 @@ const main = async () => {
 
     console.log("Done! No more posts to generate, exiting...");
   } catch (error) {
-    sendTelegramMessage("Summarizer Error: " + JSON.stringify(error));
+    sendTelegramMessage("Summarizer Error: " + JSON.stringify(error, null, 2));
     console.log("MAIN ERROR: ", error);
   } finally {
     await db.end();
