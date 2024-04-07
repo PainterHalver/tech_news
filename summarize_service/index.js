@@ -1,14 +1,15 @@
-const { VertexAI, HarmCategory, HarmBlockThreshold } = require('@google-cloud/vertexai');
+const { GoogleGenerativeAI, BlockReason, HarmCategory, HarmBlockThreshold } = require('@google/generative-ai');
 const mysql = require('mysql2/promise');
 
 process.env.GOOGLE_APPLICATION_CREDENTIALS = './service-account.json';
 
 // Initialize Vertex with your Cloud project and location
-const vertex_ai = new VertexAI({ project: 'my-gcp-project-413702', location: 'asia-southeast1' });
 const model = 'gemini-1.0-pro-001';
+const API_KEY = process.env.GOOGLE_GENERATIVE_AI_API_KEY;
+const genAI = new GoogleGenerativeAI(API_KEY);
 
 // Instantiate the models
-const generativeModel = vertex_ai.getGenerativeModel({
+const generativeModel = genAI.getGenerativeModel({
   model: model,
   generationConfig: {
     "max_output_tokens": 768,
@@ -19,19 +20,19 @@ const generativeModel = vertex_ai.getGenerativeModel({
   safetySettings: [
     {
       'category': HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
-      'threshold': HarmBlockThreshold.BLOCK_ONLY_HIGH,
+      'threshold': HarmBlockThreshold.BLOCK_NONE,
     },
     {
       'category': HarmCategory.HARM_CATEGORY_HATE_SPEECH,
-      'threshold': HarmBlockThreshold.BLOCK_ONLY_HIGH,
+      'threshold': HarmBlockThreshold.BLOCK_NONE,
     },
     {
       'category': HarmCategory.HARM_CATEGORY_HARASSMENT,
-      'threshold': HarmBlockThreshold.BLOCK_ONLY_HIGH,
+      'threshold': HarmBlockThreshold.BLOCK_NONE,
     },
     {
       'category': HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
-      'threshold': HarmBlockThreshold.BLOCK_ONLY_HIGH,
+      'threshold': HarmBlockThreshold.BLOCK_NONE,
     },
   ],
 });
