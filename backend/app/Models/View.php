@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 
 class View extends Model
 {
@@ -23,5 +24,10 @@ class View extends Model
     public function post(): BelongsTo
     {
         return $this->belongsTo(Post::class);
+    }
+
+    public function publisher(): HasOneThrough
+    {
+        return $this->hasOneThrough(Publisher::class, Post::class, 'id', 'id', 'post_id', 'publisher_id');
     }
 }

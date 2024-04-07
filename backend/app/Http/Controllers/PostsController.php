@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Comment;
 use App\Models\Post;
+use App\Models\View;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -98,6 +99,26 @@ class PostsController extends Controller
         }
 
         return response()->json($post, 200);
+    }
+
+    /**
+     * Every body also read feature
+     */
+    public function recommend(Post $post, Request $request): JsonResponse
+    {
+        $user_viewed_this_post_ids = $post->views()->pluck('user_id');
+        $views = View::select(['views.post_id', 'posts.title','posts.published_at'])
+            ->selectRaw('COUNT(*) as views_count')
+            ->join('posts', 'views.post_id', '=', 'posts.id')
+            ->whereIn('views.user_id', $user_viewed_this_post_ids)
+            ->where('views.post_id', '!=', $post->id)
+            ->groupBy('views.post_id')
+            ->orderBy('views_count', 'desc')
+            ->limit(10)
+            ->with('publisher')
+            ->get();
+
+        return response()->json($views, 200);
     }
 
     public function vote(Post $post, Request $request): JsonResponse

@@ -33,6 +33,7 @@ Route::prefix('posts')->group(function() {
 
     Route::get('/', [PostsController::class, 'index']);
     Route::get('/{post}', [PostsController::class, 'show']);
+    Route::get('/{post}/recommend', [PostsController::class, 'recommend']);
     Route::get('/{post}/comments', [PostsController::class, 'getPostComments']);
 });
 

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\View;
 use App\Models\Vote;
 use App\Traits\TestHelper;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -459,5 +460,31 @@ class PostsTest extends TestCase
         $response = $this->actingAs($admin)->deleteJson('/api/posts/'.$post->id);
 
         $response->assertStatus(204);
+    }
+
+    public function test_post_recommend_success(): void
+    {
+        $post1 = $this->create_post();
+        $post2 = $this->create_post();
+        $user1 = $this->create_user();
+        $user2 = $this->create_user();
+        $view1 = $post1->views()->create([
+            'user_id' => $user1->id,
+        ]);
+        $view2 = $post2->views()->create([
+            'user_id' => $user2->id,
+        ]);
+        $view3 = $post2->views()->create([
+            'user_id' => $user1->id,
+        ]);
+
+        // User 2 calls recommend api should see post 1
+        $response = $this->actingAs($user2)->getJson('/api/posts/'.$post2->id.'/recommend');
+        $response->assertStatus(200);
+
+        // should see post 1 post_id in data array as the first element
+        $response->assertJsonFragment([
+            'post_id' => $post1->id,
+        ]);
     }
 }
