@@ -9,6 +9,7 @@ import SessionProvider from "@/components/SessionProvider";
 import { Toaster } from "react-hot-toast";
 import { RegisterModal } from "@/components/RegisterModal";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import { authOptions } from "./api/auth/[...nextauth]/authOptions";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,7 +27,7 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
 
   return (
     <html lang="en">
