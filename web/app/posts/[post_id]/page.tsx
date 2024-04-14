@@ -19,6 +19,7 @@ import PublisherCard from "./PublisherCard";
 import ReadPostButton from "./ReadPostButton";
 import "moment/locale/vi";
 import PostDescriptionAI from "./PostDescriptionAI";
+import RecommendCard from "./RecommendCard";
 moment.locale("vi");
 
 type Props = {
@@ -109,6 +110,8 @@ export default function PostPage({ params }: Props) {
         <BookmarkBox post={post} />
 
         <PublisherCard publisher={post.publisher} />
+
+        <RecommendCard post={post} />
       </aside>
     </main>
   );

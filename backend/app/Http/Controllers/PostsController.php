@@ -114,7 +114,7 @@ class PostsController extends Controller
             ->where('views.post_id', '!=', $post->id)
             ->groupBy('views.post_id')
             ->orderBy('views_count', 'desc')
-            ->limit(10)
+            ->limit(5)
             ->with('publisher')
             ->get();
 

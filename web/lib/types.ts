@@ -23,6 +23,7 @@ export type Publisher = {
 
 export type Post = {
   id: number;
+  post_id?: number;
   publisher_id: number;
   title: string;
   description: string;
