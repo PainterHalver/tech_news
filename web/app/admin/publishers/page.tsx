@@ -3,7 +3,7 @@
 import axios from "@/lib/axios";
 import { Paginated, Publisher } from "@/lib/types";
 import { useEffect, useState } from "react";
-import { showModal } from "@/lib/utils";
+import Paginator from "@/components/Paginator";
 
 const PER_PAGE = 10;
 
@@ -15,14 +15,12 @@ export default function ManagePublishersPage() {
   const [query, setQuery] = useState("");
   const tablePublishers = publishers.slice(PER_PAGE * (page - 1), PER_PAGE * page);
   const totalPages = Math.ceil(publishers.length / PER_PAGE);
-  const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   const fetchPublishers = async (search?: string) => {
     try {
       setFetching(true);
       const res = await axios.get(`/api/publishers?per_page=100000&page=1&search=${search ?? query}`);
       const data = res.data as Paginated<Publisher>;
-      console.log(data.data);
       setPublishers(data.data);
     } catch (error) {
       console.log(error);
@@ -95,15 +93,7 @@ export default function ManagePublishersPage() {
           </tbody>
         </table>
         <div className="join mt-3 flex justify-end flex-wrap">
-          {pageNumbers.map((pageNumber) => (
-            <button
-              key={pageNumber}
-              className={`join-item btn transition-none ${pageNumber === page ? "btn-disabled" : ""}`}
-              onClick={() => setPage(pageNumber)}
-            >
-              {pageNumber}
-            </button>
-          ))}
+          <Paginator perPage={PER_PAGE} totalPages={totalPages} page={page} setPage={setPage} />
         </div>
       </div>
     </main>

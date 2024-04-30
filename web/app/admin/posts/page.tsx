@@ -10,6 +10,7 @@ import { BiCommentDetail, BiUpvote } from "react-icons/bi";
 import Link from "next/link";
 import { EditPostModal } from "./EditPostModal";
 import { ConfirmDeleteModal } from "./ConfirmDeleteModal";
+import Paginator from "@/components/Paginator";
 moment.locale("vi");
 
 const PER_PAGE = 10;
@@ -22,7 +23,6 @@ export default function ManageUsersPage() {
   const [query, setQuery] = useState("");
   const tablePosts = posts.slice(PER_PAGE * (page - 1), PER_PAGE * page);
   const totalPages = Math.ceil(posts.length / PER_PAGE);
-  const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
 
   const fetchPosts = async (search?: string) => {
@@ -135,15 +135,9 @@ export default function ManageUsersPage() {
           </tbody>
         </table>
         <div className="join mt-3 flex justify-end flex-wrap">
-          {pageNumbers.map((pageNumber) => (
-            <button
-              key={pageNumber}
-              className={`join-item btn transition-none ${pageNumber === page ? "btn-disabled" : ""}`}
-              onClick={() => setPage(pageNumber)}
-            >
-              {pageNumber}
-            </button>
-          ))}
+          <div className="join mt-3 flex justify-end flex-wrap">
+            <Paginator perPage={PER_PAGE} totalPages={totalPages} page={page} setPage={setPage} />
+          </div>
         </div>
       </div>
 

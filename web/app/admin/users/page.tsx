@@ -5,6 +5,7 @@ import { Paginated, User } from "@/lib/types";
 import { useEffect, useState } from "react";
 import { EditUserModal } from "./EditUserModal";
 import { showModal } from "@/lib/utils";
+import Paginator from "@/components/Paginator";
 
 const PER_PAGE = 10;
 
@@ -16,7 +17,6 @@ export default function ManageUsersPage() {
   const [query, setQuery] = useState("");
   const tableUsers = users.slice(PER_PAGE * (page - 1), PER_PAGE * page);
   const totalPages = Math.ceil(users.length / PER_PAGE);
-  const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
   const fetchUsers = async (search?: string) => {
@@ -110,15 +110,9 @@ export default function ManageUsersPage() {
           </tbody>
         </table>
         <div className="join mt-3 flex justify-end flex-wrap">
-          {pageNumbers.map((pageNumber) => (
-            <button
-              key={pageNumber}
-              className={`join-item btn transition-none ${pageNumber === page ? "btn-disabled" : ""}`}
-              onClick={() => setPage(pageNumber)}
-            >
-              {pageNumber}
-            </button>
-          ))}
+          <div className="join mt-3 flex justify-end flex-wrap">
+            <Paginator perPage={PER_PAGE} totalPages={totalPages} page={page} setPage={setPage} />
+          </div>
         </div>
       </div>
 
