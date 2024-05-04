@@ -112,7 +112,11 @@ class UsersController extends Controller
             'role' => 'string|in:admin,user',
             'username' => 'string|min:3|max:20|unique:users,username,'.$user->id,
         ]);
-        if ($fields['password']) {
+
+        // If no password field or empty, remove it from fields
+        if (empty($fields['password'])) {
+            unset($fields['password']);
+        } else {
             $fields['password'] = md5($fields['password']);
         }
 

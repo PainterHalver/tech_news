@@ -3,7 +3,7 @@ import axios from "@/lib/axios";
 import { User } from "@/lib/types";
 import { closeModal, showModal } from "@/lib/utils";
 import Axios, { AxiosError } from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 
 type EditUserErrors = {
@@ -22,18 +22,29 @@ type Props = {
 export const EditUserModal = ({ selectedUser, users, setUsers }: Props) => {
   const [loading, setLoading] = useState(false);
   const [editErrors, setEditErrors] = useState<EditUserErrors>({});
+  const [username, setUsername] = useState(selectedUser?.username || "");
+  const [fullName, setFullName] = useState(selectedUser?.full_name || "");
+  const [password, setPassword] = useState("");
+  const [role, setRole] = useState(selectedUser?.role || "user");
+
+  useEffect(() => {
+    setUsername(selectedUser?.username || "");
+    setFullName(selectedUser?.full_name || "");
+    setPassword("");
+    setRole(selectedUser?.role || "user");
+  }, [selectedUser]);
 
   const handleEditUser = async (e: any) => {
     e.preventDefault();
     try {
       setLoading(true);
+      console.log(e.target.elements);
       setEditErrors({});
-      const { username, full_name, password, role } = e.target.elements;
       const res = await axios.patch(`/api/users/${selectedUser?.id}`, {
-        username: username.value,
-        full_name: full_name.value,
-        password: password.value,
-        role: role.value,
+        username,
+        full_name: fullName,
+        password,
+        role,
       });
 
       const userData = res.data;
@@ -71,7 +82,8 @@ export const EditUserModal = ({ selectedUser, users, setUsers }: Props) => {
               name="username"
               placeholder="tên đăng nhập"
               className={`input input-bordered w-full ${editErrors.username ? "input-error" : ""}`}
-              defaultValue={selectedUser?.username}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               autoComplete="new-off"
             />
             {editErrors.username && (
@@ -89,7 +101,8 @@ export const EditUserModal = ({ selectedUser, users, setUsers }: Props) => {
               name="full_name"
               placeholder="tên đầy đủ"
               className={`input input-bordered w-full ${editErrors.full_name ? "input-error" : ""}`}
-              defaultValue={selectedUser?.full_name}
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
             />
             {editErrors.full_name && (
               <div className="label">
@@ -106,6 +119,8 @@ export const EditUserModal = ({ selectedUser, users, setUsers }: Props) => {
               name="password"
               placeholder="mật khẩu"
               className={`input input-bordered w-full ${editErrors.password ? "input-error" : ""}`}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
             {editErrors.password && (
               <div className="label">
@@ -121,13 +136,11 @@ export const EditUserModal = ({ selectedUser, users, setUsers }: Props) => {
             <select
               name="role"
               className={`select select-bordered w-full ${editErrors.password ? "select-error" : ""}`}
+              value={role}
+              onChange={(e) => setRole(e.target.value as any)}
             >
-              <option value="user" selected={selectedUser?.role === "user"}>
-                Người dùng
-              </option>
-              <option value="admin" selected={selectedUser?.role === "admin"}>
-                Quản trị
-              </option>
+              <option value="user">Người dùng</option>
+              <option value="admin">Quản trị</option>
             </select>
             {editErrors.role && (
               <div className="label">
