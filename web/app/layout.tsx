@@ -30,7 +30,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const session = await getServerSession(authOptions);
 
   return (
-    <html lang="en">
+    <html lang="en" data-theme="dark">
       <SessionProvider session={session}>
         <body className={`${inter.className} flex flex-col min-h-screen min-w-fit no-scrollbar`}>
           <div className="z-[10000]">
