@@ -15,7 +15,7 @@ class UsersController extends Controller
             'full_name' => 'required|string|min:3|max:50',
             'password' => 'string|min:4|nullable',
             'new_password' => 'required_with:password|string|min:4|nullable',
-            'password_confirm' => 'required_with:new_password|string|same:password|nullable',
+            'password_confirm' => 'required_with:new_password|string|same:new_password|nullable',
         ]);
         $fields['password'] = md5($fields['new_password']);
 
