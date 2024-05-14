@@ -19,7 +19,7 @@ export const FeedbackModal = () => {
       const res = await axios.post("/api/feedbacks", {
         content,
       });
-      toast.success("Gửi góp ý thành công. Cảm ơn bạn đã đóng góp ý kiến.");
+      toast.success("Gửi góp ý thành công. Cảm ơn bạn đã đóng góp ý kiến!");
       setContent("");
       closeModal("feedback_modal");
     } catch (error) {
@@ -34,6 +34,10 @@ export const FeedbackModal = () => {
     <dialog id="feedback_modal" className="modal">
       <div className="modal-box flex flex-col no-scrollbar">
         <h3 className="font-bold text-xl text-center text-text-primary">Góp ý ứng dụng</h3>
+        <p className="text-[14.5px] mt-3">
+          Xin hãy chia sẻ cảm nghĩ của bạn về ứng dụng này, có điểm gì thú vị, có điểm gì cần cải thiện, hay những tính
+          năng bạn muốn thêm vào ứng dụng. Cảm ơn bạn rất nhiều!
+        </p>
         <form className="form-control w-full" onSubmit={handleFeedback}>
           <label className="form-control w-full mt-4">
             <textarea
