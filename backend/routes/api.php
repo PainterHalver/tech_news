@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\PublishersController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\FeedbacksController;
 
 Route::get('/health_check', function () {
     return response()->json(['message' => 'ok'], 200);
@@ -57,4 +58,9 @@ Route::prefix('me')->group(function() {
 Route::middleware('auth:sanctum')->middleware('role:admin')->group(function() {
     Route::get('/users', [UsersController::class, 'index']);
     Route::patch('/users/{user}', [UsersController::class, 'update']);
+});
+
+Route::prefix('feedbacks')->group(function() {
+    Route::get('/', [FeedbacksController::class, 'index']);
+    Route::post('/', [FeedbacksController::class, 'store']);
 });

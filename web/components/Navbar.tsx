@@ -7,6 +7,8 @@ import { useEffect } from "react";
 import { avatarLink, trimString } from "@/lib/utils";
 import { CgProfile } from "react-icons/cg";
 import { MdLogout } from "react-icons/md";
+import LoginButton from "./LoginButton";
+import FeedbackButton from "./FeedbackButton";
 
 const NavBar = () => {
   const session = useSession();
@@ -37,6 +39,7 @@ const NavBar = () => {
           <p className="text-lg">Tech News</p>
         </Link>
       </div>
+      <FeedbackButton />
       {session.status === "authenticated" ? (
         <div className="flex-none gap-2 flex items-center">
           <p className="">{trimString(user?.full_name || "", 30)}</p>
@@ -66,17 +69,7 @@ const NavBar = () => {
           </div>
         </div>
       ) : (
-        <div className="mr-5">
-          <button
-            className="btn btn-sm border btn-outline"
-            onClick={() => {
-              const modal = document.getElementById("login_modal");
-              (modal as any).showModal();
-            }}
-          >
-            Đăng nhập
-          </button>
-        </div>
+        <LoginButton />
       )}
     </div>
   );

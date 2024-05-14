@@ -10,6 +10,7 @@ import { Toaster } from "react-hot-toast";
 import { RegisterModal } from "@/components/RegisterModal";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { authOptions } from "./api/auth/[...nextauth]/authOptions";
+import { FeedbackModal } from "@/components/FeedbackModal";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -41,6 +42,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             <SideBar />
             <div className="lg:pl-60 bg-bg-primary flex-1">{children}</div>
           </div>
+          <FeedbackModal />
           <LoginModal />
           <RegisterModal />
         </body>
