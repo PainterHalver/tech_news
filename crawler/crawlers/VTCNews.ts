@@ -8,11 +8,11 @@ const { JSDOM } = jsdom;
 
 export default class VTCNews extends Crawler {
   readonly publisher_name = "vtcnews";
-  readonly publisher_link = "https://vtc.vn/khoa-hoc-cong-nghe-82.html";
+  readonly publisher_link = "https://vtcnews.vn/khoa-hoc-cong-nghe-82.html";
   readonly publisher_fullname = "VTC News";
 
   async crawlData(): Promise<void> {
-    const res = await fetch("https://vtc.vn/rss/khoa-hoc-cong-nghe.rss");
+    const res = await fetch("https://vtcnews.vn/rss/khoa-hoc-cong-nghe.rss");
     const xml = await res.text();
     const data = parser.parse(xml);
 
