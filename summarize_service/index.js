@@ -1,6 +1,8 @@
 const { GoogleGenerativeAI, BlockReason, HarmCategory, HarmBlockThreshold } = require('@google/generative-ai');
 const mysql = require('mysql2/promise');
+const dotenv = require('dotenv')
 
+dotenv.config();
 process.env.GOOGLE_APPLICATION_CREDENTIALS = './service-account.json';
 
 // Initialize Vertex with your Cloud project and location
