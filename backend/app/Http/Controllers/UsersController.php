@@ -22,7 +22,9 @@ class UsersController extends Controller
         $old_password_hash = md5($fields['password']);
         if (isset($fields['password']) && $old_password_hash !== $user->password) {
             return response()->json([
-                'message' => 'Wrong password',
+                'errors' => [
+                    'password' => ['Sai mật khẩu'],
+                ],
             ], 400);
         }
 
