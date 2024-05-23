@@ -17,9 +17,16 @@ class UsersController extends Controller
             'new_password' => 'required_with:password|string|min:4|nullable',
             'password_confirm' => 'required_with:new_password|string|same:new_password|nullable',
         ]);
-        $fields['password'] = md5($fields['new_password']);
 
         $user = auth()->user();
+        $old_password_hash = md5($fields['password']);
+        if (isset($fields['password']) && $old_password_hash !== $user->password) {
+            return response()->json([
+                'message' => 'Wrong password',
+            ], 400);
+        }
+
+        $fields['password'] = md5($fields['new_password']);
         $user->update($fields);
         $token = $request->bearerToken();
 
