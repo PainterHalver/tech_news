@@ -112,7 +112,7 @@ class PostsController extends Controller
             ->join('posts', 'views.post_id', '=', 'posts.id')
             ->whereIn('views.user_id', $user_viewed_this_post_ids)
             ->where('views.post_id', '!=', $post->id)
-            ->groupBy('views.post_id')
+            ->groupBy('views.post_id', 'posts.title', 'posts.published_at')
             ->orderBy('views_count', 'desc')
             ->limit(5)
             ->with('publisher')
